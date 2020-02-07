@@ -2,6 +2,6 @@
 .idea/vcs.xml
 .idea/modules.xml
 .idea/misc.xml
-.idea/tp5_js.iml
 .idea/.gitignore
 .DS_Store
+.idea/projet_js_echec.iml
