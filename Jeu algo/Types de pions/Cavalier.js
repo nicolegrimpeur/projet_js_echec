@@ -6,6 +6,6 @@ class Cavalier extends Pions {
 
 
     init() {
-        this.capacite_de_deplacement.push([+2, -1], [+2, +1], [+1, +2], [+1, -2], [-2, -1], [-2, +1], [-1, +2], [-1, -2]);
+        this.capacite_de_deplacement.push([[+2, -1]], [[+2, +1]], [[+1, +2]], [[+1, -2]], [[-2, -1]], [[-2, +1]], [[-1, +2]], [[-1, -2]]);
     }
 }

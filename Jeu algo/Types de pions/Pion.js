@@ -7,10 +7,10 @@ class Pion extends Pions {
 
     init() {
         if (this.color == 1) {
-            this.capacite_de_deplacement.push([0, 1]);
+            this.capacite_de_deplacement.push([[0, 1], [1, 1], [-1, 1], [0, 2]]);
         }
         else {
-            this.capacite_de_deplacement.push([0, -1]);
+            this.capacite_de_deplacement.push([[0, -1], [1, -1], [-1, -1], [0, -2]]);
         }
     }
 }

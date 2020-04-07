@@ -10,24 +10,4 @@ class Pions {
     get_pion_type() {
         return this.type;
     }
-
-    // affiche lors du clic sur une case les cases possibles et les pions qui peuvent être pris
-    affiche(x_pos, y_pos) {
-
-    }
-
-    // déplace le pion et vérifie si un pion est mangé
-    deplacement(x_clic, y_clic, x_pos, y_pos) {
-
-    }
-
-    // mat
-    isMat() {
-
-    }
-
-    // roi en echec
-    isEchec() {
-
-    }
 }
