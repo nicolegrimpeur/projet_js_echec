@@ -9,3 +9,17 @@ td {
     height: 50px;
     text-align: center;
 }
+
+/* classe pour les pions */
+.pions {
+    height: 47px;
+    width: 47px;
+}
+
+vert {
+    background-color: green;
+}
+
+rouge {
+    background-color: red;
+}

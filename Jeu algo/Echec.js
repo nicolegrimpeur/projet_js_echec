@@ -82,10 +82,17 @@ class Echec {
         for (let list_capa of pion.capacite_de_deplacement) {
             for (let capa of list_capa) {
                 case_tmp = this.getCaseState(capa[0] + pion.x, capa[1] + pion.y);
-                if (case_tmp == undefined) {
+                if (pion.type == "Pion" && (capa == pion.capacite_de_deplacement[0][1] || capa == pion.capacite_de_deplacement[0][2])) {
+                    if (case_tmp != undefined) {
+                        if (case_tmp.color != pion.color) {
+                            list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
+                        }
+                    }
+                }
+                else if (case_tmp == undefined) {
                     list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
                 }
-                else if (case_tmp.color != pion.color && case_tmp.color != undefined) {
+                else if (case_tmp.color != pion.color) {
                     list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
                     break;
                 }
@@ -94,6 +101,7 @@ class Echec {
                 }
             }
         }
+
         return list_deplacement;
     }
 
