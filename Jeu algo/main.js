@@ -16,6 +16,5 @@ Number.prototype.between = function(lower, upper) {
     console.log(game.deplacement(3, 7, 6,4)); // fou noir mange reine blanche
     console.log(game.pions_manges);
     let view = new EchecView(game, "echec1");
-
 })();
 

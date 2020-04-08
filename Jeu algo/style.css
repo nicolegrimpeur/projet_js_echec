@@ -16,10 +16,10 @@ td {
     width: 47px;
 }
 
-vert {
+.vert {
     background-color: green;
 }
 
-rouge {
+.rouge {
     background-color: red;
 }

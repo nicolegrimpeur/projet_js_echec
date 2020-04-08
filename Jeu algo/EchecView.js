@@ -1,12 +1,15 @@
 class EchecView {
     constructor(game, name) {
         this.game = game;
-        console.log(this.game.grid[0][0].type);
         this.name = name;
-        this.click = 0;
+        this.click = [];
+        // permet d'enlevr le premier enfant texte du tableau
+        let tab = document.getElementById("tab");
+        tab.removeChild(tab.firstChild);
         this.create_grid();
         this.affiche_pion();
         this.create_listeneurs();
+
         // this.nom_joueur();
     }
 
@@ -24,6 +27,8 @@ class EchecView {
                 tr.appendChild(td);
             }
         }
+
+
     }
 
     affiche_pion() {
@@ -74,30 +79,63 @@ class EchecView {
 
     // lorsque l'on clique sur l'une des cases du tableau
     click_event(x, y) {
-        // this.game.affiche(x, y);
-
-        console.log("click", x, y);
-        console.log(this.game.getCaseState(x, y));
         // this.modif_grid(["refresh"]);
-        this.modif_grid(["affiche", x, y]);
+        if (this.click.length != 0) {
+            this.modif_grid(["deplace", x, y]);
+        }
+        else {
+            this.modif_grid(["affiche", x, y]);
+        }
     }
 
     // modifie la grille
     modif_grid(value) {
+        // supprime tout et raffiche tout selon la grille
         if (value[0] == "refresh") {
             let tab = document.getElementById("tab");
-            for (let i = 0; i <= 8; ++i) {
+            for (let i = 0; i < 8; ++i) {
                 tab.removeChild(tab.firstChild);
             }
             this.create_grid();
             this.affiche_pion();
+            this.create_listeneurs();
         }
+        // affiche les positions où le joueur peut aller
         else if (value[0] == "affiche") {
+            let td;
+
+            while (document.getElementsByClassName("vert").length != 0) {
+                td = document.getElementsByClassName("vert");
+                td[0].removeAttribute("class");
+            }
+
+            while (document.getElementsByClassName("rouge").length != 0) {
+                td = document.getElementsByClassName("rouge");
+                td[0].removeAttribute("class");
+            }
 
             let list_possible = this.game.affiche(value[1], value[2]);
-            // console.log(list_possible);
+            for (let case_tmp of list_possible) {
+                td = document.getElementById(String(case_tmp[1]) + String(case_tmp[0]));
+                if (this.game.getCaseState(case_tmp[0], case_tmp[1]) == undefined) {
+                    td.setAttribute("class", "vert");
+                }
+                else {
+                    td.setAttribute("class", "rouge");
+                }
+            }
 
-
+            this.click = [value[1], value[2]];
+        }
+        else if (value[0] == "deplace") {
+            if (this.game.deplacement(value[1], value[2], this.click[0], this.click[1])) {
+                this.modif_grid("refresh");
+                this.click = [];
+                console.log("deplace");
+            }
+            else {
+                this.modif_grid(["affiche", value[1], value[2]]);
+            }
         }
     }
 }

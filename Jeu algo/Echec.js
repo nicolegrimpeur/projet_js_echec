@@ -79,25 +79,26 @@ class Echec {
         let case_tmp;
         let list_deplacement = [];
 
-        for (let list_capa of pion.capacite_de_deplacement) {
-            for (let capa of list_capa) {
-                case_tmp = this.getCaseState(capa[0] + pion.x, capa[1] + pion.y);
-                if (pion.type == "Pion" && (capa == pion.capacite_de_deplacement[0][1] || capa == pion.capacite_de_deplacement[0][2])) {
-                    if (case_tmp != undefined) {
-                        if (case_tmp.color != pion.color) {
+        if (pion != undefined) {
+            for (let list_capa of pion.capacite_de_deplacement) {
+                for (let capa of list_capa) {
+                    if ((capa[0] + pion.x).between(0, 7) && (capa[1] + pion.y).between(0, 7)) {
+                        case_tmp = this.getCaseState(capa[0] + pion.x, capa[1] + pion.y);
+                        if (pion.type == "Pion" && (capa == pion.capacite_de_deplacement[0][1] || capa == pion.capacite_de_deplacement[0][2])) {
+                            if (case_tmp != undefined) {
+                                if (case_tmp.color != pion.color) {
+                                    list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
+                                }
+                            }
+                        } else if (case_tmp == undefined) {
                             list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
+                        } else if (case_tmp.color != pion.color) {
+                            list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
+                            break;
+                        } else {
+                            break;
                         }
                     }
-                }
-                else if (case_tmp == undefined) {
-                    list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
-                }
-                else if (case_tmp.color != pion.color) {
-                    list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
-                    break;
-                }
-                else {
-                    break;
                 }
             }
         }
