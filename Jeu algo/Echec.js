@@ -11,7 +11,7 @@ class Echec {
     }
 
     // initialise la taille de la liste grid
-    init_grid () {
+    init_grid() {
         for (let i = 0; i < 8; ++i) {
             this.grid[i] = Array(8);
         }
@@ -100,6 +100,15 @@ class Echec {
                                 if (case_tmp.color != pion.color) {
                                     list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
                                 }
+                            }
+                        } else if (pion.type == "Pion" && capa == list_capa[0]) { // le pion ne peut pas manger en avant
+                            // si la case est vide, alors je peux me déplacer dessus
+                            if (case_tmp == undefined) {
+                                list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
+                            }
+                            // sinon le pion ne peut pas avancer
+                            else {
+                                break;
                             }
                         } else if (case_tmp == undefined) { // si la case est vide, alors on peut se déplacer dessus
                             list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
