@@ -142,7 +142,7 @@ class Echec {
                         this.pions_manges.push([this.getCaseState(x_clic, y_clic)]);
                     }
 
-                    // modification des positions du pion et modification sur la grille 
+                    // modification des positions du pion et modification sur la grille
                     pion.x = x_clic;
                     pion.y = y_clic;
                     this.modif_grid(x_clic, y_clic, pion);
