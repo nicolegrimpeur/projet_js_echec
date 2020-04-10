@@ -2,9 +2,8 @@ class EchecView {
     constructor(game, name) {
         this.game = game;
         this.name = name;
-        this.click = [];
-        // permet d'enlevr le premier enfant texte du tableau
-        let tab = document.getElementById("tab");
+        this.click = []; // stocke les coordonnées du premier clic
+        let tab = document.getElementById("tab"); // permet d'enlevr le premier enfant texte du tableau
         tab.removeChild(tab.firstChild);
         this.create_grid();
         this.affiche_pion();
@@ -13,6 +12,7 @@ class EchecView {
         // this.nom_joueur();
     }
 
+    // creer la grille
     create_grid() {
         let tab = document.getElementById("tab");
         let tr;
@@ -23,14 +23,14 @@ class EchecView {
             tab.appendChild(tr);
             for (let j = 0; j < 8; ++j) {
                 td = document.createElement("td");
+                // chaque case a une coordonnée dans son id yx avec l'origine en haut à gauche du tableau
                 td.setAttribute("id", String(i) + String(j));
                 tr.appendChild(td);
             }
         }
-
-
     }
 
+    // affiche les images des pions
     affiche_pion() {
         let td;
         let img;
@@ -40,6 +40,7 @@ class EchecView {
                 img = document.createElement('img');
                 img.setAttribute("class", "pions");
 
+                // teste en fonction de la grille du jeu quel image doit être placé
                 if (this.game.grid[i][j] != undefined) {
                     if (this.game.grid[i][j].type == "Roi") {
                         img.setAttribute("src", "./images/roi.png");
@@ -79,10 +80,11 @@ class EchecView {
 
     // lorsque l'on clique sur l'une des cases du tableau
     click_event(x, y) {
-        // this.modif_grid(["refresh"]);
+        // si on a déjà cliqué sur un pion, alors on déplace
         if (this.click.length != 0) {
             this.modif_grid(["deplace", x, y]);
         }
+        // sinon on affiche les cases où le pion cliqué peut se déplacer
         else {
             this.modif_grid(["affiche", x, y]);
         }
@@ -104,6 +106,7 @@ class EchecView {
         else if (value[0] == "affiche") {
             let td;
 
+            // on supprime toutes les cases possédant une couleur
             while (document.getElementsByClassName("vert").length != 0) {
                 td = document.getElementsByClassName("vert");
                 td[0].removeAttribute("class");
@@ -117,21 +120,30 @@ class EchecView {
             let list_possible = this.game.affiche(value[1], value[2]);
             for (let case_tmp of list_possible) {
                 td = document.getElementById(String(case_tmp[1]) + String(case_tmp[0]));
+                // on affiche toutes les cases vides où le joueur peut se déplacer en vert
                 if (this.game.getCaseState(case_tmp[0], case_tmp[1]) == undefined) {
                     td.setAttribute("class", "vert");
                 }
+                // on affiche toutes les pions que le joueur peut prendre en rouge
                 else {
                     td.setAttribute("class", "rouge");
                 }
             }
 
+            // on stocke les coordonnées du click
             this.click = [value[1], value[2]];
         }
+        // déplace le pion
         else if (value[0] == "deplace") {
+            // si le déplacement est possible
             if (this.game.deplacement(value[1], value[2], this.click[0], this.click[1])) {
+                // on raffraichit la grille avec les nouveaux pions
                 this.modif_grid("refresh");
+
+                // supprime le stockage des coordonnées précédentes
                 this.click = [];
 
+                // supprime les couleurs déjà présentes
                 let td;
                 while (document.getElementsByClassName("vert").length != 0) {
                     td = document.getElementsByClassName("vert");
@@ -147,10 +159,12 @@ class EchecView {
                     td = document.getElementsByClassName("orange");
                     td[0].removeAttribute("class");
                 }
+
+                // rajoute une couleur orange sous le pion qui vient d'être joué
                 td = document.getElementById(String(value[2]) + String(value[1]));
                 td.setAttribute("class", "orange");
-
             }
+            // si on ne peut pas jouer, alors on affiche les cases où le nouveau pion cliqué
             else {
                 this.modif_grid(["affiche", value[1], value[2]]);
             }
