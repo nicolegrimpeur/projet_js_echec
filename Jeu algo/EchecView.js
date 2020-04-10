@@ -131,7 +131,25 @@ class EchecView {
             if (this.game.deplacement(value[1], value[2], this.click[0], this.click[1])) {
                 this.modif_grid("refresh");
                 this.click = [];
-                console.log("deplace");
+
+                let td;
+                while (document.getElementsByClassName("vert").length != 0) {
+                    td = document.getElementsByClassName("vert");
+                    td[0].removeAttribute("class");
+                }
+
+                while (document.getElementsByClassName("rouge").length != 0) {
+                    td = document.getElementsByClassName("rouge");
+                    td[0].removeAttribute("class");
+                }
+
+                while (document.getElementsByClassName("orange").length != 0) {
+                    td = document.getElementsByClassName("orange");
+                    td[0].removeAttribute("class");
+                }
+                td = document.getElementById(String(value[2]) + String(value[1]));
+                td.setAttribute("class", "orange");
+
             }
             else {
                 this.modif_grid(["affiche", value[1], value[2]]);
