@@ -25,6 +25,11 @@ class EchecView {
                 td = document.createElement("td");
                 // chaque case a une coordonnée dans son id yx avec l'origine en haut à gauche du tableau
                 td.setAttribute("id", String(i) + String(j));
+
+                if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
+                    td.setAttribute("class", "black")
+                }
+
                 tr.appendChild(td);
             }
         }
@@ -42,23 +47,45 @@ class EchecView {
 
                 // teste en fonction de la grille du jeu quel image doit être placé
                 if (this.game.grid[i][j] != undefined) {
-                    if (this.game.grid[i][j].type == "Roi") {
-                        img.setAttribute("src", "./images/roi.png");
+                    if (this.game.grid[i][j].color == 0) {
+                        if (this.game.grid[i][j].type == "Roi") {
+                            img.setAttribute("src", "./images/blanc/roi.png");
+                        }
+                        if (this.game.grid[i][j].type == "Dame") {
+                            img.setAttribute("src", "./images/blanc/dame.png");
+                        }
+                        if (this.game.grid[i][j].type == "Cavalier") {
+                            img.setAttribute("src", "./images/blanc/cavalier.png");
+                        }
+                        if (this.game.grid[i][j].type == "Fou") {
+                            img.setAttribute("src", "./images/blanc/fou.png");
+                        }
+                        if (this.game.grid[i][j].type == "Tour") {
+                            img.setAttribute("src", "./images/blanc/tour.png");
+                        }
+                        if (this.game.grid[i][j].type == "Pion") {
+                            img.setAttribute("src", "./images/blanc/pion.png");
+                        }
                     }
-                    if (this.game.grid[i][j].type == "Dame") {
-                        img.setAttribute("src", "./images/dame.png");
-                    }
-                    if (this.game.grid[i][j].type == "Cavalier") {
-                        img.setAttribute("src", "./images/cavalier.png");
-                    }
-                    if (this.game.grid[i][j].type == "Fou") {
-                        img.setAttribute("src", "./images/fou.png");
-                    }
-                    if (this.game.grid[i][j].type == "Tour") {
-                        img.setAttribute("src", "./images/tour.png");
-                    }
-                    if (this.game.grid[i][j].type == "Pion") {
-                        img.setAttribute("src", "./images/pion.png");
+                    else {
+                        if (this.game.grid[i][j].type == "Roi") {
+                            img.setAttribute("src", "./images/noir/roi.png");
+                        }
+                        if (this.game.grid[i][j].type == "Dame") {
+                            img.setAttribute("src", "./images/noir/dame.png");
+                        }
+                        if (this.game.grid[i][j].type == "Cavalier") {
+                            img.setAttribute("src", "./images/noir/cavalier.png");
+                        }
+                        if (this.game.grid[i][j].type == "Fou") {
+                            img.setAttribute("src", "./images/noir/fou.png");
+                        }
+                        if (this.game.grid[i][j].type == "Tour") {
+                            img.setAttribute("src", "./images/noir/tour.png");
+                        }
+                        if (this.game.grid[i][j].type == "Pion") {
+                            img.setAttribute("src", "./images/noir/pion.png");
+                        }
                     }
                     td.appendChild(img);
                 }
@@ -109,12 +136,12 @@ class EchecView {
             // on supprime toutes les cases possédant une couleur
             while (document.getElementsByClassName("vert").length != 0) {
                 td = document.getElementsByClassName("vert");
-                td[0].removeAttribute("class");
+                this.color_black(td);
             }
 
             while (document.getElementsByClassName("rouge").length != 0) {
                 td = document.getElementsByClassName("rouge");
-                td[0].removeAttribute("class");
+                this.color_black(td);
             }
 
             let list_possible = this.game.affiche(value[1], value[2]);
@@ -147,17 +174,17 @@ class EchecView {
                 let td;
                 while (document.getElementsByClassName("vert").length != 0) {
                     td = document.getElementsByClassName("vert");
-                    td[0].removeAttribute("class");
+                    this.color_black(td);
                 }
 
                 while (document.getElementsByClassName("rouge").length != 0) {
                     td = document.getElementsByClassName("rouge");
-                    td[0].removeAttribute("class");
+                    this.color_black(td);
                 }
 
                 while (document.getElementsByClassName("orange").length != 0) {
                     td = document.getElementsByClassName("orange");
-                    td[0].removeAttribute("class");
+                    this.color_black(td);
                 }
 
                 // rajoute une couleur orange sous le pion qui vient d'être joué
@@ -169,5 +196,25 @@ class EchecView {
                 this.modif_grid(["affiche", value[1], value[2]]);
             }
         }
+    }
+
+    color_black(td) {
+        let unite = td[0].id % 10;
+        let dizaine = (td[0].id - td[0].id % 10) / 10;
+
+        let new_td = document.createElement("td");
+        new_td.setAttribute("id", td[0].id);
+
+        if ((dizaine % 2 == 0 && unite % 2 == 1) || (dizaine % 2 == 1 && unite % 2 == 0)) {
+            new_td.setAttribute("class", "black");
+        }
+
+        new_td.addEventListener('click', () => {
+            this.click_event(unite, dizaine);
+        });
+
+        td[0].replaceWith(new_td);
+
+        return true;
     }
 }
