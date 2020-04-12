@@ -8,6 +8,7 @@ class Echec {
         this.tour = 0; // nombre pair : joueur 0, nombre impair : joueur 1
         this.currentPlayer = 0;
         this.pions_manges = []; // stocke les pions qui ont été mangé
+        this.echec = [false]; // stock si le roi est en echec ou non et quel pion le menace
     }
 
     // initialise la taille de la liste grid
@@ -50,6 +51,8 @@ class Echec {
             }
         }
 
+        this.grid[1][0] = new Pion(0, 0, 1);
+
         this.tour = 0;
         this.pions_manges = [];
     }
@@ -82,7 +85,7 @@ class Echec {
         let list_deplacement = [];
 
         // vérifie que la case cliqué contient un pion
-        if (pion != undefined && pion.color == this.getCurrentPlayer()) {
+        if (pion != undefined && pion.color == this.getCurrentPlayer() && !this.isFinished()) {
             // parcours la liste des possibilités de déplacements du pions
             for (let list_capa of pion.capacite_de_deplacement) {
                 for (let capa of list_capa) {
@@ -152,6 +155,8 @@ class Echec {
                     this.modif_grid(x_clic, y_clic, pion);
                     this.modif_grid(x_pos, y_pos, undefined);
                     this.tour++;
+                    this.new_dame(x_clic, y_clic);
+                    this.isEchec(x_clic, y_clic);
                     return true;
                 }
             }
@@ -159,22 +164,56 @@ class Echec {
         return false;
     }
 
+    // fonction qui ajoute la dame lorsque l'on arrive au bout du plateau
+    new_dame(x, y) {
+        let pion = this.getCaseState(x, y);
+        if (pion.type == "Pion") {
+            if ((pion.color == 0 && y == 0) || (pion.color == 1 && y == 7)) {
+                this.modif_grid(x, y, new Dame(pion.color, x, y));
+            }
+        }
+        return false;
+    }
+
+    // retourne le joueur gagnant
+    getWinner() {
+        return this.getCurrentPlayer();
+    }
+
     // mat
     isMat() {
-
+        return false;
     }
 
     // roi en echec
-    isEchec() {
+    isEchec(x, y) {
+        this.tour--;
+        let list_pions = this.affiche(x, y);
+        this.tour++;
+        console.log(list_pions);
+        for (let pion of list_pions) {
+            console.log(pion[0]);
+            if (pion[0].type == "Roi") {
+                console.log("je suis echec");
+                return true;
+            }
+        }
 
+        return false;
     }
 
-    // fonction qui ajoute la dame lorsque l'on arrive au bout du plateau
-    new_dame() {
-
-    }
-    // retourne le joueur gagnant
-    getWinner() {
-
+    // détermine s'il y a un gagnant ou non
+    isFinished() {
+        if (this.isMat()) {
+            return true;
+        }
+        else {
+            for (let pion of this.pions_manges) {
+                if (pion[0].type == "Roi") {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

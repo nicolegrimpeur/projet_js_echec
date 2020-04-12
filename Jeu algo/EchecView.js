@@ -82,7 +82,8 @@ class EchecView {
             this.modif_grid(["affiche", x, y]);
         }
 
-        this.nom_joueur();
+        if (this.game.isFinished()) this.affichage_gagnant();
+        else this.nom_joueur();
     }
 
     // modifie la grille
@@ -218,8 +219,14 @@ class EchecView {
 
     // affiche le nom du joueur qui peut jouer
     nom_joueur() {
-        if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "C'est au joueur Frodon ";
-        else document.getElementById("joueur").textContent = "C'est au joueur Sauron ";
+        if (this.game.echec[0]) {
+            if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "Le joueur Frodon est en echec";
+            else document.getElementById("joueur").textContent = "Le joueur Sauron est en echec ";
+        }
+        else {
+            if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "C'est au joueur Frodon ";
+            else document.getElementById("joueur").textContent = "C'est au joueur Sauron ";
+        }
         this.blason();
     }
 
@@ -240,5 +247,27 @@ class EchecView {
         // on définit quel est l'image que l'on doit afficher
         if (this.game.getCurrentPlayer() == 0) img.setAttribute('src', './images/blason_du_joueur/frodon.png');
         else img.setAttribute('src', './images/blason_du_joueur/sauron.png');
+    }
+
+    // affiche le gagnant ou s'il y a égalité
+    affichage_gagnant() {
+        if (this.game.isFinished()) {
+            // affiche le joueur qui a gagné
+            if (this.game.isMat()) {
+                if (this.game.getWinner()) document.getElementById("joueur").textContent = "Frodon a gagné ! Sauron est echec et mat ! ";
+                else if (!this.game.getWinner()) document.getElementById("joueur").textContent = "Sauron a gagné ! Frodon est echec et mat ! ";
+            }
+            else {
+                if (this.game.getWinner()) document.getElementById("joueur").textContent = "Frodon a gagné ! ";
+                else if (!this.game.getWinner()) document.getElementById("joueur").textContent = "Sauron a gagné ! ";
+            }
+        }
+        else {
+            // supprime l'image qui indique à qui le tour est
+            if (document.getElementsByClassName("blason")[0] != undefined) {
+                document.getElementsByClassName("blason")[0].remove();
+            }
+            document.getElementById("joueur").textContent = "Il y a égalité ! ";
+        }
     }
 }
