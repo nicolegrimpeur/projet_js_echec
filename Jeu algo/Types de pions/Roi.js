@@ -1,7 +1,7 @@
 // objet contenant le roi
 class Roi extends Pions {
     constructor(couleur, x, y) {
-        super(couleur, x, y, "Cavalier");
+        super(couleur, x, y, "Roi");
         this.init();
     }
 

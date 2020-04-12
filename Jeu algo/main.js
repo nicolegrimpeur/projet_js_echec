@@ -6,7 +6,7 @@ Number.prototype.between = function(lower, upper) {
 
 (function() {
     let game = new Echec();
-    // console.log(game.grid);
+    console.log(game.grid);
     // console.log(game.deplacement(3, 3, 3,1)); // avance pion noir de 2 case
     // // console.log(game.deplacement(3, 4, 3,3)); // avance pion noir d'une case
     // console.log(game.deplacement(6, 4, 2,0)); // avance fou noir en diagonale

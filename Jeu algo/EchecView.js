@@ -48,44 +48,10 @@ class EchecView {
                 // teste en fonction de la grille du jeu quel image doit être placé
                 if (this.game.grid[i][j] != undefined) {
                     if (this.game.grid[i][j].color == 0) {
-                        if (this.game.grid[i][j].type == "Roi") {
-                            img.setAttribute("src", "./images/blanc/roi.png");
-                        }
-                        if (this.game.grid[i][j].type == "Dame") {
-                            img.setAttribute("src", "./images/blanc/dame.png");
-                        }
-                        if (this.game.grid[i][j].type == "Cavalier") {
-                            img.setAttribute("src", "./images/blanc/cavalier.png");
-                        }
-                        if (this.game.grid[i][j].type == "Fou") {
-                            img.setAttribute("src", "./images/blanc/fou.png");
-                        }
-                        if (this.game.grid[i][j].type == "Tour") {
-                            img.setAttribute("src", "./images/blanc/tour.png");
-                        }
-                        if (this.game.grid[i][j].type == "Pion") {
-                            img.setAttribute("src", "./images/blanc/pion.png");
-                        }
+                        img.setAttribute("src", "./images/blanc/" + String(this.game.grid[i][j].type) + ".png");
                     }
                     else {
-                        if (this.game.grid[i][j].type == "Roi") {
-                            img.setAttribute("src", "./images/noir/roi.png");
-                        }
-                        if (this.game.grid[i][j].type == "Dame") {
-                            img.setAttribute("src", "./images/noir/dame.png");
-                        }
-                        if (this.game.grid[i][j].type == "Cavalier") {
-                            img.setAttribute("src", "./images/noir/cavalier.png");
-                        }
-                        if (this.game.grid[i][j].type == "Fou") {
-                            img.setAttribute("src", "./images/noir/fou.png");
-                        }
-                        if (this.game.grid[i][j].type == "Tour") {
-                            img.setAttribute("src", "./images/noir/tour.png");
-                        }
-                        if (this.game.grid[i][j].type == "Pion") {
-                            img.setAttribute("src", "./images/noir/pion.png");
-                        }
+                        img.setAttribute("src", "./images/noir/" + String(this.game.grid[i][j].type) + ".png");
                     }
                     td.appendChild(img);
                 }
@@ -167,9 +133,6 @@ class EchecView {
                 // on raffraichit la grille avec les nouveaux pions
                 this.modif_grid("refresh");
 
-                // supprime le stockage des coordonnées précédentes
-                this.click = [];
-
                 // supprime les couleurs déjà présentes
                 let td;
                 while (document.getElementsByClassName("vert").length != 0) {
@@ -187,9 +150,33 @@ class EchecView {
                     this.color_black(td);
                 }
 
+                let td_clic = document.getElementById(String(value[2]) + String(value[1]));
+                if (td_clic.firstChild != null) {
+                    td_clic.removeChild(td_clic.firstChild);
+                }
+
+                let img = document.createElement('img');
+                img.setAttribute("class", "pions");
+
+                // teste en fonction de la grille du jeu quel image doit être placé
+                if (this.game.grid[value[2]][value[1]] != undefined) {
+                    if (this.game.grid[value[2]][value[1]].color == 0) {
+                        img.setAttribute("src", "./images/blanc/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
+                    }
+                    else {
+                        img.setAttribute("src", "./images/noir/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
+                    }
+                    td_clic.appendChild(img);
+                }
+
+                td = document.getElementById(String(this.click[1]) + String(this.click[0]));
+                td.removeChild(td.firstChild);
+
+                // supprime le stockage des coordonnées précédentes
+                this.click = [];
+
                 // rajoute une couleur orange sous le pion qui vient d'être joué
-                td = document.getElementById(String(value[2]) + String(value[1]));
-                td.setAttribute("class", "orange");
+                td_clic.setAttribute("class", "orange");
             }
             // si on ne peut pas jouer, alors on affiche les cases où le nouveau pion cliqué
             else {
@@ -212,6 +199,10 @@ class EchecView {
         new_td.addEventListener('click', () => {
             this.click_event(unite, dizaine);
         });
+
+        if (td[0].firstChild != null) {
+            new_td.append(td[0].firstChild);
+        }
 
         td[0].replaceWith(new_td);
 

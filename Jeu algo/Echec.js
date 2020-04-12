@@ -51,13 +51,12 @@ class Echec {
         }
 
         this.tour = 0;
-        this.currentPlayer = 0;
         this.pions_manges = [];
     }
 
     // renvoi le joueur
     getCurrentPlayer() {
-        return (this.tour % 2);
+        return (this.tour % 2); // 0 blanc, 1 noir
     }
 
     // renvoi l'etat d'une case
@@ -83,7 +82,7 @@ class Echec {
         let list_deplacement = [];
 
         // vérifie que la case cliqué contient un pion
-        if (pion != undefined) {
+        if (pion != undefined && pion.color == this.getCurrentPlayer()) {
             // parcours la liste des possibilités de déplacements du pions
             for (let list_capa of pion.capacite_de_deplacement) {
                 for (let capa of list_capa) {
@@ -156,6 +155,7 @@ class Echec {
                     pion.y = y_clic;
                     this.modif_grid(x_clic, y_clic, pion);
                     this.modif_grid(x_pos, y_pos, undefined);
+                    this.tour++;
                     return true;
                 }
             }
