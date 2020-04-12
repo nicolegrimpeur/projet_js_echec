@@ -12,6 +12,13 @@ td {
     text-align: center;
 }
 
+h3{
+    text-align: center;
+    color: black;
+    font-size: 30px ;
+    font-family: ringbearer;
+}
+
 /* classe pour les pions */
 .pions {
     height: 67px;
@@ -32,4 +39,9 @@ td {
 
 .black {
     background-color: #a76e37;
+}
+
+.blason {
+    height: 40px;
+    width: 40px;
 }

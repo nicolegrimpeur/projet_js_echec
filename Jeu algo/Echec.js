@@ -105,10 +105,6 @@ class Echec {
                             if (case_tmp == undefined) {
                                 list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
                             }
-                            // sinon le pion ne peut pas avancer
-                            else {
-                                break;
-                            }
                         } else if (case_tmp == undefined) { // si la case est vide, alors on peut se déplacer dessus
                             list_deplacement.push([capa[0] + pion.x, capa[1] + pion.y]);
                         } else if (case_tmp.color != pion.color) { // sinon on vérifie que c'est un pion ennemi
@@ -173,6 +169,10 @@ class Echec {
 
     }
 
+    // fonction qui ajoute la dame lorsque l'on arrive au bout du plateau
+    new_dame() {
+
+    }
     // retourne le joueur gagnant
     getWinner() {
 

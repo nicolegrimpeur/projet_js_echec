@@ -9,7 +9,7 @@ class EchecView {
         this.affiche_pion();
         this.create_listeneurs();
 
-        // this.nom_joueur();
+        this.nom_joueur();
     }
 
     // creer la grille
@@ -81,6 +81,8 @@ class EchecView {
         else {
             this.modif_grid(["affiche", x, y]);
         }
+
+        this.nom_joueur();
     }
 
     // modifie la grille
@@ -150,11 +152,15 @@ class EchecView {
                     this.color_black(td);
                 }
 
+                // on récupère la case du clic
                 let td_clic = document.getElementById(String(value[2]) + String(value[1]));
+
+                // s'il y a déjà un pion sur cette case, on le supprime
                 if (td_clic.firstChild != null) {
                     td_clic.removeChild(td_clic.firstChild);
                 }
 
+                // déplace l'image de la case d'origine vers la case d'arrivé
                 let img = document.createElement('img');
                 img.setAttribute("class", "pions");
 
@@ -185,6 +191,7 @@ class EchecView {
         }
     }
 
+    // remplace la case de départ et rajoute la couleur de la case en noir si besoin
     color_black(td) {
         let unite = td[0].id % 10;
         let dizaine = (td[0].id - td[0].id % 10) / 10;
@@ -207,5 +214,31 @@ class EchecView {
         td[0].replaceWith(new_td);
 
         return true;
+    }
+
+    // affiche le nom du joueur qui peut jouer
+    nom_joueur() {
+        if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "C'est au joueur Frodon ";
+        else document.getElementById("joueur").textContent = "C'est au joueur Sauron ";
+        this.blason();
+    }
+
+    // affiche l'image du joueur qui peut jouer
+    blason() {
+        // supprime l'image existante
+        if (document.getElementsByClassName("blason")[0] != undefined) {
+            document.getElementsByClassName("blason")[0].remove();
+        }
+
+        // affiche l'image
+        let currentDiv = document.getElementById("joueur");
+
+        let img = document.createElement("img");
+        currentDiv.parentElement.appendChild(img);
+        img.setAttribute('class', 'blason');
+
+        // on définit quel est l'image que l'on doit afficher
+        if (this.game.getCurrentPlayer() == 0) img.setAttribute('src', './images/blason_du_joueur/frodon.png');
+        else img.setAttribute('src', './images/blason_du_joueur/sauron.png');
     }
 }
