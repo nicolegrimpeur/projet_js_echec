@@ -184,6 +184,10 @@ class EchecView {
 
                 // rajoute une couleur orange sous le pion qui vient d'être joué
                 td_clic.setAttribute("class", "orange");
+
+                // if (this.game.echec[0]) {
+                //     this.modif_grid(["affiche", ])
+                // }
             }
             // si on ne peut pas jouer, alors on affiche les cases où le nouveau pion cliqué
             else {
