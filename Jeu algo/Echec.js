@@ -189,8 +189,6 @@ class Echec {
         let pion_tmp;
         this.echec = [false];
 
-        console.log("list deplacement avant", list_deplacement);
-
         this.modif_grid(x, y, undefined);
         for (let position_roi = 0; position_roi < list_deplacement.length; ++position_roi) {
             x_tmp = list_deplacement[position_roi][0][0] + x;
@@ -224,7 +222,6 @@ class Echec {
                 }
             }
         }
-        console.log("au milieu", list_deplacement);
 
         case_a_suppr.sort();
         case_a_suppr.reverse();
@@ -233,7 +230,6 @@ class Echec {
             list_deplacement.splice(ind, 1);
         }
 
-        console.log("liste fin", list_deplacement.length);
         this.echec = echec_tmp;
         return list_deplacement;
     }
