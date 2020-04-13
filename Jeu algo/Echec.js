@@ -190,15 +190,19 @@ class Echec {
         this.tour--;
         let list_pions = this.affiche(x, y);
         this.tour++;
-        console.log(list_pions);
-        for (let pion of list_pions) {
-            console.log(pion[0]);
-            if (pion[0].type == "Roi") {
-                console.log("je suis echec");
-                return true;
+
+        let pion;
+        for (let case_tmp of list_pions) {
+            pion = this.getCaseState(case_tmp[0], case_tmp[1]);
+            if (pion != undefined) {
+                if (pion.type == "Roi") {
+                    this.echec[0] = true;
+                    this.echec.push([case_tmp[0], case_tmp[1]]);
+                    return true;
+                }
             }
         }
-
+        this.echec = [false];
         return false;
     }
 
