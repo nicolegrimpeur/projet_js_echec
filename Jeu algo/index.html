@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <title>Plateau de jeu</title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
-    <script src="Pions.js"></script>
-    <script src="Echec.js"></script>
-    <script src="EchecView.js"></script>
-    <script src="Types%20de%20pions/Cavalier.js"></script>
-    <script src="Types%20de%20pions/Dame.js"></script>
-    <script src="Types%20de%20pions/Pion.js"></script>
-    <script src="Types%20de%20pions/Fou.js"></script>
-    <script src="Types%20de%20pions/Tour.js"></script>
-    <script src="Types%20de%20pions/Roi.js"></script>
+    <script type="text/javascript" src="Pions.js"></script>
+    <script type="text/javascript" src="Joueur.js"></script>
+    <script type="text/javascript" src="Echec.js"></script>
+    <script type="text/javascript" src="EchecView.js"></script>
+    <script type="text/javascript" src="Types%20de%20pions/Cavalier.js"></script>
+    <script type="text/javascript" src="Types%20de%20pions/Dame.js"></script>
+    <script type="text/javascript" src="Types%20de%20pions/Pion.js"></script>
+    <script type="text/javascript" src="Types%20de%20pions/Fou.js"></script>
+    <script type="text/javascript" src="Types%20de%20pions/Tour.js"></script>
+    <script type="text/javascript" src="Types%20de%20pions/Roi.js"></script>
 </head>
 <body>
 
@@ -20,6 +21,8 @@
 
 <div class="masthead">
     <center>
+        <span id="score_noir" class="score">0</span>
+
         <div id="mange_blanc">
             <img src="./images/transparent.png" class="mange">
         </div>
@@ -27,7 +30,10 @@
         <table id="tab">
         </table>
 
+
         <br>
+        <span id="score_blanc" class="score">0</span>
+
         <div id="mange_noir">
             <img src="./images/transparent.png" class="mange">
         </div>
@@ -35,7 +41,7 @@
     <br>
 </div>
 
-<script type="text/javascript" src="main.js"></script>
+<script src="main.js"></script>
 
 </body>
 </html>

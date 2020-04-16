@@ -1,6 +1,6 @@
 class Joueur {
     constructor(pseudo, couleur) {
-        this.pseudo =
+        this.pseudo = pseudo;
         this.points = 0;
         this.couleur = (couleur == "blanc") ? 0 : 1;
     }

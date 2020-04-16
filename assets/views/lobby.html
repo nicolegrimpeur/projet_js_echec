@@ -3,11 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Projet Echec</title>
-        <link rel="stylesheet" type="text/css" href="./css/main.css" />
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
     </head>
     <body>
         <center>
-            <br /><br /><BIG id="Hello">Bonjour nouveau joueur</BIG><br /><br />
+            <br /><br /><BIG id="hello">Bonjour nouveau joueur</BIG>
+            <br /><BIG id="choix"></BIG><br /><br />
 
             <form action="./lobby.html" method="GET" >
                 Pseudo : <input type="text" name="pseudo" placeholder="Entrer un pseudo" /><br /><br />
@@ -20,10 +21,11 @@
                     <input type="radio" name="couleur" value="noirs" />Noirs<br /><br />
 
 
-
+                
                 Soumettre: <input type="submit" value="s'enregistrer"/>
                 Envoi msg au serveur: <input type="button" value="send" id="clicked">
                 Ràz: <a href="http://localhost:8100"><input type="button" name="reset" value="reset"/></a> <br /><br />
+                Lancer le jeu: <a href="http://localhost:8100/plateau.html"><input type="button" name="start" value="start"/></a>
             <script src="/socket.io/socket.io.js"></script>
             <script src="../js/client.js"></script>
             </form>

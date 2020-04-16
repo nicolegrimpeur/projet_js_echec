@@ -15,8 +15,9 @@ var pseudo = $_GET('pseudo'), couleur = $_GET('couleur');
 console.log(pseudo + " " + couleur);
 
 if (pseudo != null) { // remplacement du message d'acceuil
-    document.getElementById("Hello").textContent = "Salutation " + pseudo + " !";
-    document.getElementById("Hello").insertAdjacentText("afterend", "Tu as choisi les " + couleur);
+    document.getElementById("hello").textContent = "Salutation " + pseudo + " !";
+    document.getElementById("choix").textContent = "Tu as choisi les " + couleur;
+    //document.getElementById("choix").insertAdjacentText("afterend", "Tu as choisi les " + couleur);
 }
 
 (function () {
