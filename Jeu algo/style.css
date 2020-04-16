@@ -1,16 +1,37 @@
+.masthead{
+	background: url(fond.png);
+  background-size: 1670px ;
+  position: fixed; 
+  margin-top: -300px;
+ margin-left: 10px;
+  left: 0; 
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+
+}
+ 	
+
 table {
+	margin-top: 150px;
     border-collapse: collapse;
     border: black solid 2px;
-    background-color: #fadd90;
+    background : url(dalle-blanche.png);
 }
 
 td {
-    border: black solid 1px ;
+    border: black solid 2px ;
     display: table-cell;
-    padding: 37px;
+    padding: 42px;
     text-align: center;
 }
 
 .black {
-    background-color: #a76e37;
-}
+    background : url(dalle-noire.png);
+
+ }
+ input{
+ 	margin-top: 110px;
+ }
+
+
