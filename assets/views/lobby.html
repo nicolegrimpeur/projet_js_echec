@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Projet Echec</title>
+        <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    </head>
+    <body>
+        <center>
+            <br /><br /><BIG id="Hello">Bonjour nouveau joueur</BIG><br /><br />
+
+            <form action="./lobby.html" method="GET" >
+                Pseudo : <input type="text" name="pseudo" placeholder="Entrer un pseudo" /><br /><br />
+                Couleur : <input type="radio" name="couleur" value="lambda" />Aléatoire<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <input type="radio" name="couleur" value="blancs" />Blancs<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <input type="radio" name="couleur" value="noirs" />Noirs<br /><br />
+
+
+
+                Soumettre: <input type="submit" value="s'enregistrer"/>
+                Envoi msg au serveur: <input type="button" value="send" id="clicked">
+                Ràz: <a href="http://localhost:8100"><input type="button" name="reset" value="reset"/></a> <br /><br />
+            <script src="/socket.io/socket.io.js"></script>
+            <script src="../js/client.js"></script>
+            </form>
+        <center>
+    </body>
+</html>

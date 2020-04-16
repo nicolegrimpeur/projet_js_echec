@@ -1,0 +1,58 @@
+table {
+    border-collapse: collapse;
+    border: black solid 2px;
+    background-color: #fadd90;
+}
+
+td {
+    border: solid 3px black;
+    display: table-cell;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+}
+
+h3{
+    text-align: center;
+    color: black;
+    font-size: 30px ;
+    font-family: ringbearer;
+}
+
+/* classe pour les pions */
+.pions {
+    height: 67px;
+    width: 67px;
+}
+
+.vert {
+    background-color: green;
+}
+
+.rouge {
+    background-color: red;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.black {
+    background-color: #a76e37;
+}
+
+.blason {
+    height: 40px;
+    width: 40px;
+}
+
+/* classe du bouton reset */
+.reset {
+    height: 60px;
+    width: 60px;
+}
+
+.mange {
+    height: 40px;
+    width: 40px;
+}
