@@ -1,4 +1,5 @@
 import("./Pions.js");
+import("./Joueur.js");
 
 class Echec {
     constructor() {
@@ -11,6 +12,9 @@ class Echec {
         this.echec = [false]; // stock si le roi est en echec ou non et quel pion le menace
         this.deja_dans_affiche = false;
         this.mat = undefined;
+        this.points = [0, 0];
+        this.pseudo_joueur1 = "pseudo1";
+        this.pseudo_joueur2 = "pseudo2";
     }
 
     // initialise la taille de la liste grid
@@ -55,6 +59,10 @@ class Echec {
 
         this.grid[1][0] = new Pion(0, 0, 1);
         this.grid[1][2] = new Pion(0, 2, 1);
+
+        let random = Math.floor(Math.random() * 2);
+        this.joueur_blanc = new Joueur((random) ? this.pseudo_joueur1 : this.pseudo_joueur2, 0);
+        this.joueur_noir = new Joueur((!random) ? this.pseudo_joueur1 : this.pseudo_joueur2, 1);
 
         this.tour = 0;
         this.pions_manges = [];
