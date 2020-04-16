@@ -10,6 +10,7 @@ class Echec {
         this.pions_manges = []; // stocke les pions qui ont été mangé
         this.echec = [false]; // stock si le roi est en echec ou non et quel pion le menace
         this.deja_dans_affiche = false;
+        this.mat = undefined;
     }
 
     // initialise la taille de la liste grid
@@ -53,9 +54,11 @@ class Echec {
         }
 
         this.grid[1][0] = new Pion(0, 0, 1);
+        this.grid[1][2] = new Pion(0, 2, 1);
 
         this.tour = 0;
         this.pions_manges = [];
+        this.mat = undefined;
     }
 
     // renvoi le joueur
@@ -84,6 +87,7 @@ class Echec {
 
     // affiche lors du clic sur une case les cases possibles et les pions qui peuvent être pris
     affiche(x_pos, y_pos) {
+        console.log("affiche");
         // récupère la case
         let pion = this.getCaseState(x_pos, y_pos);
         let case_tmp;
@@ -91,7 +95,7 @@ class Echec {
         let capa_copie;
 
         // vérifie que la case cliqué contient un pion
-        if (pion != undefined && pion.color == this.getCurrentPlayer() && !this.isFinished()) {
+        if (pion != undefined && pion.color == this.getCurrentPlayer() && (!this.fini || !this.isFinished())) {
             capa_copie = pion.capacite_de_deplacement;
 
             if (pion.type == "Roi" && !this.deja_dans_affiche) {
@@ -171,6 +175,7 @@ class Echec {
                     this.tour++;
                     this.new_dame(x_clic, y_clic);
                     this.isEchec(x_clic, y_clic);
+                    this.mat = undefined;
                     return true;
                 }
             }
@@ -180,58 +185,62 @@ class Echec {
 
     // permet de calculer les possibilités de déplacement du roi
     affiche_roi(x, y) {
-        let list_deplacement = this.getCaseState(x, y).capacite_de_deplacement.slice();
+        // console.log(this.getCaseState(x, y));
         let pion = this.getCaseState(x, y);
-        let echec_tmp = this.echec;
-        let list_echec = [];
-        let x_tmp;
-        let y_tmp;
-        let pion_tmp;
-        this.echec = [false];
+        if (pion != undefined) {
+            let list_deplacement = this.getCaseState(x, y).capacite_de_deplacement.slice();
+            let echec_tmp = this.echec;
+            let list_echec = [];
+            let x_tmp;
+            let y_tmp;
+            let pion_tmp;
+            this.echec = [false];
 
-        this.modif_grid(x, y, undefined);
-        for (let position_roi = 0; position_roi < list_deplacement.length; ++position_roi) {
-            x_tmp = list_deplacement[position_roi][0][0] + x;
-            y_tmp = list_deplacement[position_roi][0][1] + y;
-            if (this.getCaseState(x_tmp, y_tmp) == undefined || this.getCaseState(x_tmp, y_tmp).color != pion.color) {
-                pion_tmp = this.getCaseState(x_tmp, y_tmp);
-                if (this.modif_grid(x_tmp, y_tmp, pion)) {
+            this.modif_grid(x, y, undefined);
+            for (let position_roi = 0; position_roi < list_deplacement.length; ++position_roi) {
+                x_tmp = list_deplacement[position_roi][0][0] + x;
+                y_tmp = list_deplacement[position_roi][0][1] + y;
+                if (this.getCaseState(x_tmp, y_tmp) == undefined || this.getCaseState(x_tmp, y_tmp).color != pion.color) {
+                    pion_tmp = this.getCaseState(x_tmp, y_tmp);
+                    if (this.modif_grid(x_tmp, y_tmp, pion)) {
 
-                    for (let j = 0; j < 8; ++j) {
-                        for (let i = 0; i < 8; ++i) {
-                            if (i != x || j != y) {
-                                if (this.isEchec(i, j)) {
-                                    list_echec.push([x_tmp, y_tmp]);
+                        for (let j = 0; j < 8; ++j) {
+                            for (let i = 0; i < 8; ++i) {
+                                if (i != x || j != y) {
+                                    if (this.isEchec(i, j)) {
+                                        list_echec.push([x_tmp, y_tmp]);
+                                    }
                                 }
                             }
                         }
+
+                        this.modif_grid(x_tmp, y_tmp, pion_tmp);
                     }
-
-                    this.modif_grid(x_tmp, y_tmp, pion_tmp);
                 }
             }
-        }
-        this.modif_grid(x, y, pion);
+            this.modif_grid(x, y, pion);
 
 
-        let case_a_suppr = [];
-        for (let case_echec of list_echec) {
-            for (let compteur = 0; compteur < list_deplacement.length; ++compteur) {
-                if (case_echec[0] == (list_deplacement[compteur][0][0] + x) && case_echec[1] == (list_deplacement[compteur][0][1] + y)) {
-                    if (case_a_suppr.indexOf(compteur) == -1) case_a_suppr.push(compteur);
+            let case_a_suppr = [];
+            for (let case_echec of list_echec) {
+                for (let compteur = 0; compteur < list_deplacement.length; ++compteur) {
+                    if (case_echec[0] == (list_deplacement[compteur][0][0] + x) && case_echec[1] == (list_deplacement[compteur][0][1] + y)) {
+                        if (case_a_suppr.indexOf(compteur) == -1) case_a_suppr.push(compteur);
+                    }
                 }
             }
+
+            case_a_suppr.sort();
+            case_a_suppr.reverse();
+
+            for (let ind of case_a_suppr) {
+                list_deplacement.splice(ind, 1);
+            }
+
+            this.echec = echec_tmp;
+            return list_deplacement;
         }
-
-        case_a_suppr.sort();
-        case_a_suppr.reverse();
-
-        for (let ind of case_a_suppr) {
-            list_deplacement.splice(ind, 1);
-        }
-
-        this.echec = echec_tmp;
-        return list_deplacement;
+        return [];
     }
 
     // fonction qui ajoute la dame lorsque l'on arrive au bout du plateau
@@ -251,13 +260,37 @@ class Echec {
     }
 
     // mat
-    isMat() {
-        return false;
+    isMat(color) {
+        console.log("this.mat", this.mat, this.tour);
+        if (this.mat == undefined) {
+            let pion;
+            console.log("je rentre dans mat");
+            for (let j = 0; j < 8; ++j) {
+                for (let i = 0; i < 8; ++i) {
+                    pion = this.getCaseState(i, j);
+                    console.log(pion);
+                    if (pion != undefined) {
+                        if (pion.type == "Roi" && pion.color == color) {
+                            console.log("je vais manger");
+                            if (this.affiche(i, j).length == 0 && this.echec[0]) {
+                                console.log("mat");
+                                this.mat = true;
+                                return [true, pion.color, i, j];
+                            }
+                        }
+                    }
+                }
+            }
+            this.mat = false;
+        }
+        console.log("sort");
+        return [this.mat];
     }
 
     // roi en echec
     isEchec(x, y) {
         this.tour--;
+        // console.log("echec");
         let list_pions = this.affiche(x, y);
         this.tour++;
 
@@ -278,15 +311,18 @@ class Echec {
 
     // détermine s'il y a un gagnant ou non
     isFinished() {
-        if (this.isMat()) {
-            return true;
-        } else {
-            for (let pion of this.pions_manges) {
-                if (pion[0].type == "Roi") {
-                    return true;
+        console.log("is_finished ?")
+            if (this.isMat()[0]) {
+                console.log("fini mat");
+                return true;
+            } else {
+                for (let pion of this.pions_manges) {
+                    if (pion[0].type == "Roi") {
+                        console.log("le roi est mangé");
+                        return true;
+                    }
                 }
             }
-        }
         return false;
     }
 }

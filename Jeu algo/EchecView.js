@@ -49,8 +49,7 @@ class EchecView {
                 if (this.game.grid[i][j] != undefined) {
                     if (this.game.grid[i][j].color == 0) {
                         img.setAttribute("src", "./images/blanc/" + String(this.game.grid[i][j].type) + ".png");
-                    }
-                    else {
+                    } else {
                         img.setAttribute("src", "./images/noir/" + String(this.game.grid[i][j].type) + ".png");
                     }
                     td.appendChild(img);
@@ -82,6 +81,12 @@ class EchecView {
             this.modif_grid(["affiche", x, y]);
         }
 
+        // affiche le bouton reset
+        this.bouton_reset();
+
+        // affiche les pions mangés
+        this.pions_manges();
+
         if (this.game.isFinished()) this.affichage_gagnant();
         else this.nom_joueur();
     }
@@ -97,6 +102,7 @@ class EchecView {
             this.create_grid();
             this.affiche_pion();
             this.create_listeneurs();
+            this.pions_manges();
         }
         // affiche les positions où le joueur peut aller
         else if (value[0] == "affiche") {
@@ -169,8 +175,7 @@ class EchecView {
                 if (this.game.grid[value[2]][value[1]] != undefined) {
                     if (this.game.grid[value[2]][value[1]].color == 0) {
                         img.setAttribute("src", "./images/blanc/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
-                    }
-                    else {
+                    } else {
                         img.setAttribute("src", "./images/noir/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
                     }
                     td_clic.appendChild(img);
@@ -226,8 +231,7 @@ class EchecView {
         if (this.game.echec[0]) {
             if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "Le joueur Frodon est en echec";
             else document.getElementById("joueur").textContent = "Le joueur Sauron est en echec ";
-        }
-        else {
+        } else {
             if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "C'est au joueur Frodon ";
             else document.getElementById("joueur").textContent = "C'est au joueur Sauron ";
         }
@@ -255,23 +259,84 @@ class EchecView {
 
     // affiche le gagnant ou s'il y a égalité
     affichage_gagnant() {
+        console.log("gagnant");
         if (this.game.isFinished()) {
             // affiche le joueur qui a gagné
-            if (this.game.isMat()) {
+            if (this.game.isMat()[0]) {
                 if (this.game.getWinner()) document.getElementById("joueur").textContent = "Frodon a gagné ! Sauron est echec et mat ! ";
                 else if (!this.game.getWinner()) document.getElementById("joueur").textContent = "Sauron a gagné ! Frodon est echec et mat ! ";
-            }
-            else {
+            } else {
                 if (this.game.getWinner()) document.getElementById("joueur").textContent = "Frodon a gagné ! ";
                 else if (!this.game.getWinner()) document.getElementById("joueur").textContent = "Sauron a gagné ! ";
             }
-        }
-        else {
+        } else {
             // supprime l'image qui indique à qui le tour est
             if (document.getElementsByClassName("blason")[0] != undefined) {
                 document.getElementsByClassName("blason")[0].remove();
             }
             document.getElementById("joueur").textContent = "Il y a égalité ! ";
+        }
+    }
+
+    // affiche les pions mangés
+    pions_manges() {
+        while (document.getElementsByClassName("mange")[0] != undefined) {
+            document.getElementsByClassName("mange")[0].remove();
+        }
+
+        let div;
+        let img_pion;
+        for (let pion of this.game.pions_manges) {
+            div = document.getElementById("mange_" + ((pion[0].color) ? "noir" : "blanc"));
+
+            img_pion = document.createElement("img");
+            img_pion.setAttribute('class', 'mange');
+            div.appendChild(img_pion);
+
+            img_pion.setAttribute("src", "./images/" + ((pion[0].color) ? "noir" : "blanc") + "/" + String(pion[0].type) + ".png");
+        }
+
+        if (document.getElementById("mange_blanc").childElementCount == 0) {
+            div = document.getElementById("mange_blanc");
+
+            img_pion = document.createElement("img");
+            img_pion.setAttribute('class', 'mange');
+            div.appendChild(img_pion);
+
+            img_pion.setAttribute("src", "./images/transparent.png");
+        }
+        else if (document.getElementById("mange_noir").childElementCount == 0) {
+            div = document.getElementById("mange_noir");
+
+            img_pion = document.createElement("img");
+            img_pion.setAttribute('class', 'mange');
+            div.appendChild(img_pion);
+
+            img_pion.setAttribute("src", "./images/transparent.png");
+        }
+    }
+
+    // affiche une image qui permet de relancer le jeu
+    bouton_reset() {
+        // on affiche pas l'image si le jeu n'a pas commencé
+        if ((this.game.isFinished() || this.game.tour != 0) && document.getElementsByClassName("reset").length == 0) {
+            let currentDiv = document.getElementsByClassName('masthead')[0];
+
+            // permet de centrer le bouton
+            let center = document.createElement("center");
+            currentDiv.appendChild(center);
+
+            let img = document.createElement("img");
+            center.appendChild(img);
+            img.setAttribute('src', './images/bouton.png');
+            img.setAttribute('class', 'reset');
+
+            img.addEventListener('click', () => {
+                this.game.reset();
+                img.remove();
+                this.modif_grid(["refresh"]);
+                this.nom_joueur();
+            })
         }
     }
 }
