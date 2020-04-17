@@ -102,7 +102,6 @@ class Echec {
         let list_deplacement = [];
         let capa_copie;
 
-        console.log(this.isFinished());
         // vérifie que la case cliqué contient un pion
         if (pion != undefined && pion.color == this.getCurrentPlayer() && !this.isFinished()) {
             capa_copie = pion.capacite_de_deplacement;
