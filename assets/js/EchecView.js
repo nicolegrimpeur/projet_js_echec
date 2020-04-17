@@ -89,6 +89,7 @@ class EchecView {
         // affiche les pions mangés
         this.pions_manges();
 
+        this.game.fini = undefined;
         if (this.game.isFinished()) this.affichage_gagnant();
         else this.nom_joueur();
     }
@@ -262,12 +263,14 @@ class EchecView {
 
     // affiche le gagnant ou s'il y a égalité
     affichage_gagnant() {
-        console.log("gagnant");
+        this.game.fini = undefined;
         if (this.game.isFinished()) {
             // affiche le joueur qui a gagné
-            if (this.game.isMat()[0]) {
-                if (this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! " + this.game.joueur_blanc.pseudo + " est echec et mat ! ";
-                else if (!this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo +" a gagné ! " + this.game.joueur_noir.pseudo + " est echec et mat ! ";
+            if (this.game.isMat(0)[0]) {
+                document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! " + this.game.joueur_noir.pseudo + " est echec et mat ! ";
+            }
+            else if (this.game.isMat(1)[0]) {
+                document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo +" a gagné ! " + this.game.joueur_blanc.pseudo + " est echec et mat ! ";
             } else {
                 if (this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! ";
                 else if (!this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! ";
