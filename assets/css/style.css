@@ -5,10 +5,11 @@ table {
 }
 
 td {
-    border: solid 3px black;
+    border: black solid 1px;
     display: table-cell;
     width: 70px;
     height: 70px;
+    /* padding: 37px; */
     text-align: center;
 }
 
@@ -57,6 +58,6 @@ h3{
     width: 40px;
 }
 
-.score {
-
-}
+/* .score {
+    
+} */
