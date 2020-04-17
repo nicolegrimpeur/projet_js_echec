@@ -19,11 +19,19 @@
 	font-family: ringbearer;
 	margin-top: 60px;
   }
-.buttonstart{
+.button{
+	background-image: url(Start.png)  ;
+	background-repeat:no-repeat;
+	margin-right: 500px;
+	
+	background-color: rgba(255, 255, 255, 0);/*transparent*/
+	border: white;
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+}
+button{
+	background-size: 200px;
 	position: absolute;
-    background-image :url(Start.png);display:block;
-    width:116px;
-    height:34px;
- 
 
 }
