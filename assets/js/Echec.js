@@ -199,7 +199,6 @@ class Echec {
 
     // permet de calculer les possibilités de déplacement du roi
     affiche_roi(x, y) {
-        // console.log(this.getCaseState(x, y));
         let pion = this.getCaseState(x, y);
         if (pion != undefined) {
             let list_deplacement = this.getCaseState(x, y).capacite_de_deplacement.slice();
@@ -284,7 +283,6 @@ class Echec {
                         if (pion.type == "Roi" && pion.color == color) {
                             if (this.affiche(i, j).length == 0 && this.echec[0]) {
                                 this.mat = true;
-                                console.log(this.mat);
                                 return [true, pion.color, i, j];
                             }
                         }
@@ -299,7 +297,6 @@ class Echec {
     // roi en echec
     isEchec(x, y) {
         this.tour--;
-        // console.log("echec");
         let list_pions = this.affiche(x, y);
         this.tour++;
 
@@ -322,15 +319,18 @@ class Echec {
     isFinished() {
         if (this.fini == undefined) {
             this.fini = false;
-            if (this.isMat(0)[0] || this.isMat(1)[0]) {
+            // if (this.isMat(0)[0] || this.isMat(1)[0]) {
+            //     this.fini = true;
+            //     return true;
+            // }
+            if (this.pions_manges.length == 30) {
                 this.fini = true;
                 return true;
-            } else {
-                for (let pion of this.pions_manges) {
-                    if (pion[0].type == "Roi") {
-                        this.fini = true;
-                        return true;
-                    }
+            }
+            for (let pion of this.pions_manges) {
+                if (pion[0].type == "Roi") {
+                    this.fini = true;
+                    return true;
                 }
             }
         }

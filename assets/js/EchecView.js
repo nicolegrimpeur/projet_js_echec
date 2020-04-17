@@ -280,7 +280,7 @@ class EchecView {
             if (document.getElementsByClassName("blason")[0] != undefined) {
                 document.getElementsByClassName("blason")[0].remove();
             }
-            document.getElementById("joueur").textContent = "Il y a égalité ! ";
+            document.getElementById("joueur").textContent = "Il y a pat ! ";
         }
     }
 
