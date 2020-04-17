@@ -5,6 +5,7 @@ class Joueur {
         this.points = 0;
     }
 
+    // ajoute les points au joueur en fonction du pion mangé
     ajout_points(type) {
         if (type == "Dame") {
             this.points += 9;

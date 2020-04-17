@@ -264,6 +264,7 @@ class EchecView {
     // affiche le gagnant ou s'il y a égalité
     affichage_gagnant() {
         this.game.fini = undefined;
+        // cas où le jeu est fini mais qu'il y a égalité
         if (this.game.egalite) {
             // supprime l'image qui indique à qui le tour est
             if (document.getElementsByClassName("blason")[0] != undefined) {
@@ -271,13 +272,15 @@ class EchecView {
             }
             document.getElementById("joueur").textContent = "Il y a pat ! ";
         }
+        // affiche le joueur qui a gagné
         else if (this.game.isFinished()) {
-            // affiche le joueur qui a gagné
+            // cas où le joueur noir est mat
             if (this.game.isMat(0)[0]) {
                 document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! " + this.game.joueur_noir.pseudo + " est echec et mat ! ";
             }
+            // cas où le joueur blanc est mat
             else if (this.game.isMat(1)[0]) {
-                document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo +" a gagné ! " + this.game.joueur_blanc.pseudo + " est echec et mat ! ";
+                document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! " + this.game.joueur_blanc.pseudo + " est echec et mat ! ";
             } else {
                 if (this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! ";
                 else if (!this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! ";
@@ -287,12 +290,14 @@ class EchecView {
 
     // affiche les pions mangés
     pions_manges() {
+        // supprime tous les pions mangés
         while (document.getElementsByClassName("mange")[0] != undefined) {
             document.getElementsByClassName("mange")[0].remove();
         }
 
         let div;
         let img_pion;
+        // rajoute chaque pion mangé du côté du joueur qui l'a mangé
         for (let pion of this.game.pions_manges) {
             div = document.getElementById("mange_" + ((pion[0].color) ? "noir" : "blanc"));
 
@@ -303,6 +308,7 @@ class EchecView {
             img_pion.setAttribute("src", "../img/" + ((pion[0].color) ? "noir" : "blanc") + "/" + String(pion[0].type) + ".png");
         }
 
+        // rajoute un transparent si besoin (permet d'éviter que la ligne des pions se crée uniquement lorsqu'un nouveau pion est mangé
         if (document.getElementById("mange_blanc").childElementCount == 0) {
             div = document.getElementById("mange_blanc");
 
@@ -311,8 +317,7 @@ class EchecView {
             div.appendChild(img_pion);
 
             img_pion.setAttribute("src", "../img/transparent.png");
-        }
-        else if (document.getElementById("mange_noir").childElementCount == 0) {
+        } else if (document.getElementById("mange_noir").childElementCount == 0) {
             div = document.getElementById("mange_noir");
 
             img_pion = document.createElement("img");
@@ -338,6 +343,7 @@ class EchecView {
             img.setAttribute('src', '../img/bouton.png');
             img.setAttribute('class', 'reset');
 
+            // remet l'event du click sur l'image
             img.addEventListener('click', () => {
                 this.game.reset();
                 img.remove();
