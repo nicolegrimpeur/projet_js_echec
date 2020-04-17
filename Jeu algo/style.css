@@ -29,16 +29,19 @@ td {
     background : url(dalle-noire.png);
 
  }
- input{
+#message{ 
+    position: absolute;
+ 	margin-top:950px;
+ 	margin-left: 70px;
+ }
+ #envoi_message{
  	position: absolute;
  	margin-top:950px;
- 	text-align :left;
+ 	font-size: 50px;
+ 	
  }
  #zone_chat strong {
-
             color: black;
             background-color: white;
             padding: 2px;
         }
-
-
