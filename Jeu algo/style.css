@@ -1,9 +1,8 @@
 .masthead{
 	background: url(fond.png);
-  background-size: 1670px ;
+  background-size: 1700px ;
   position: fixed; 
-  margin-top: -300px;
- margin-left: 10px;
+  top: 0;
   left: 0; 
   /* préserve les ratios */
   min-width: 100%;
@@ -13,7 +12,7 @@
  	
 
 table {
-	margin-top: 150px;
+	margin-top: 140px;
     border-collapse: collapse;
     border: black solid 2px;
     background : url(dalle-blanche.png);
@@ -22,7 +21,7 @@ table {
 td {
     border: black solid 2px ;
     display: table-cell;
-    padding: 42px;
+    padding: 45px;
     text-align: center;
 }
 
@@ -31,7 +30,15 @@ td {
 
  }
  input{
- 	margin-top: 110px;
+ 	position: absolute;
+ 	margin-top:950px;
+ 	text-align :left;
  }
+ #zone_chat strong {
+
+            color: black;
+            background-color: white;
+            padding: 2px;
+        }
 
 
