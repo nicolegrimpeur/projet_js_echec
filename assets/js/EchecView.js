@@ -264,7 +264,14 @@ class EchecView {
     // affiche le gagnant ou s'il y a égalité
     affichage_gagnant() {
         this.game.fini = undefined;
-        if (this.game.isFinished()) {
+        if (this.game.egalite) {
+            // supprime l'image qui indique à qui le tour est
+            if (document.getElementsByClassName("blason")[0] != undefined) {
+                document.getElementsByClassName("blason")[0].remove();
+            }
+            document.getElementById("joueur").textContent = "Il y a pat ! ";
+        }
+        else if (this.game.isFinished()) {
             // affiche le joueur qui a gagné
             if (this.game.isMat(0)[0]) {
                 document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! " + this.game.joueur_noir.pseudo + " est echec et mat ! ";
@@ -275,12 +282,6 @@ class EchecView {
                 if (this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! ";
                 else if (!this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! ";
             }
-        } else {
-            // supprime l'image qui indique à qui le tour est
-            if (document.getElementsByClassName("blason")[0] != undefined) {
-                document.getElementsByClassName("blason")[0].remove();
-            }
-            document.getElementById("joueur").textContent = "Il y a pat ! ";
         }
     }
 

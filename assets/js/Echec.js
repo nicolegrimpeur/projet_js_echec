@@ -12,6 +12,7 @@ class Echec {
         this.fini = undefined;
         this.pseudo_joueur1 = "pseudo1";
         this.pseudo_joueur2 = "pseudo2";
+        this.egalite = false;
         this.init_grid();
         this.reset();
     }
@@ -56,7 +57,7 @@ class Echec {
             }
         }
 
-        // this.grid[1][0] = new Pion(0, 0, 1);
+        this.grid[1][0] = new Pion(0, 0, 1);
         // this.grid[1][2] = new Pion(0, 2, 1);
 
         let random = Math.floor(Math.random() * 2);
@@ -68,6 +69,7 @@ class Echec {
         this.mat = undefined;
         this.fini = undefined;
         this.echec = [false];
+        this.egalite = false;
     }
 
     // renvoi le joueur
@@ -319,12 +321,13 @@ class Echec {
     isFinished() {
         if (this.fini == undefined) {
             this.fini = false;
-            // if (this.isMat(0)[0] || this.isMat(1)[0]) {
-            //     this.fini = true;
-            //     return true;
-            // }
+            if (this.isMat(0)[0] || this.isMat(1)[0]) {
+                this.fini = true;
+                return true;
+            }
             if (this.pions_manges.length == 30) {
                 this.fini = true;
+                this.egalite = true;
                 return true;
             }
             for (let pion of this.pions_manges) {
