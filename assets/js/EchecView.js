@@ -48,9 +48,9 @@ class EchecView {
                 // teste en fonction de la grille du jeu quel image doit être placé
                 if (this.game.grid[i][j] != undefined) {
                     if (this.game.grid[i][j].color == 0) {
-                        img.setAttribute("src", "../../img/blanc/" + String(this.game.grid[i][j].type) + ".png");
+                        img.setAttribute("src", "../img/blanc/" + String(this.game.grid[i][j].type) + ".png");
                     } else {
-                        img.setAttribute("src", "../../img/noir/" + String(this.game.grid[i][j].type) + ".png");
+                        img.setAttribute("src", "../img/noir/" + String(this.game.grid[i][j].type) + ".png");
                     }
                     td.appendChild(img);
                 }
@@ -177,9 +177,9 @@ class EchecView {
                 // teste en fonction de la grille du jeu quel image doit être placé
                 if (this.game.grid[value[2]][value[1]] != undefined) {
                     if (this.game.grid[value[2]][value[1]].color == 0) {
-                        img.setAttribute("src", "../../img/blanc/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
+                        img.setAttribute("src", "../img/blanc/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
                     } else {
-                        img.setAttribute("src", "../../img/noir/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
+                        img.setAttribute("src", "../img/noir/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
                     }
                     td_clic.appendChild(img);
                 }
@@ -256,8 +256,8 @@ class EchecView {
         img.setAttribute('class', 'blason');
 
         // on définit quel est l'image que l'on doit afficher
-        if (this.game.getCurrentPlayer() == 0) img.setAttribute('src', '../../img/blason_du_joueur/joueur1.png');
-        else img.setAttribute('src', '../../img/blason_du_joueur/joueur1.png');
+        if (this.game.getCurrentPlayer() == 0) img.setAttribute('src', '../img/blason_du_joueur/joueur1.png');
+        else img.setAttribute('src', '../img/blason_du_joueur/joueur2.png');
     }
 
     // affiche le gagnant ou s'il y a égalité
@@ -296,7 +296,7 @@ class EchecView {
             img_pion.setAttribute('class', 'mange');
             div.appendChild(img_pion);
 
-            img_pion.setAttribute("src", "../../img/" + ((pion[0].color) ? "noir" : "blanc") + "/" + String(pion[0].type) + ".png");
+            img_pion.setAttribute("src", "../img/" + ((pion[0].color) ? "noir" : "blanc") + "/" + String(pion[0].type) + ".png");
         }
 
         if (document.getElementById("mange_blanc").childElementCount == 0) {
@@ -306,7 +306,7 @@ class EchecView {
             img_pion.setAttribute('class', 'mange');
             div.appendChild(img_pion);
 
-            img_pion.setAttribute("src", "../../img/transparent.png");
+            img_pion.setAttribute("src", "../img/transparent.png");
         }
         else if (document.getElementById("mange_noir").childElementCount == 0) {
             div = document.getElementById("mange_noir");
@@ -315,7 +315,7 @@ class EchecView {
             img_pion.setAttribute('class', 'mange');
             div.appendChild(img_pion);
 
-            img_pion.setAttribute("src", "../../img/transparent.png");
+            img_pion.setAttribute("src", "../img/transparent.png");
         }
     }
 
@@ -331,7 +331,7 @@ class EchecView {
 
             let img = document.createElement("img");
             center.appendChild(img);
-            img.setAttribute('src', '../../img/bouton.png');
+            img.setAttribute('src', '../img/bouton.png');
             img.setAttribute('class', 'reset');
 
             img.addEventListener('click', () => {
