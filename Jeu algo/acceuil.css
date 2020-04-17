@@ -1,0 +1,29 @@
+.masthead{
+	background: url(acceuil.jpg);
+  background-size: 2050px ;
+  position: fixed; 
+  top: 0;
+  left: 0; 
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+
+}
+@font-face { font-family: "ringbearer" ;src: url(RINGM.ttf);}
+
+
+ h1{
+  	text-align: center;
+  	color: #BB8715;
+	font-size: 30px ;
+	font-family: ringbearer;
+	margin-top: 60px;
+  }
+.buttonstart{
+	position: absolute;
+    background-image :url(Start.png);display:block;
+    width:116px;
+    height:34px;
+ 
+
+}
