@@ -1,7 +1,8 @@
 .masthead{
-	background: url(fond.png);
-  background-size: 1700px ;
-  position: fixed; 
+	background: url(Plateau/teste2.jpg);
+  background-repeat:no-repeat;
+  background-size: 1900px ;
+  position: fixed;
   top: 0;
   left: 0; 
   /* préserve les ratios */
@@ -12,10 +13,10 @@
  	
 
 table {
-	margin-top: 140px;
+	margin-top: 40px;
     border-collapse: collapse;
     border: black solid 2px;
-    background : url(dalle-blanche.png);
+    background : url(Plateau/dalle/dalle-blanche.png);
 }
 
 td {
@@ -26,7 +27,7 @@ td {
 }
 
 .black {
-    background : url(dalle-noire.png);
+    background : url(Plateau/dalle/dalle-noire.png);
 
  }
 #message{ 
