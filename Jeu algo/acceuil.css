@@ -19,19 +19,34 @@
 	font-family: ringbearer;
 	margin-top: 60px;
   }
-.button{
-	background-image: url(Start.png)  ;
-	background-repeat:no-repeat;
-	margin-right: 500px;
-	
-	background-color: rgba(255, 255, 255, 0);/*transparent*/
-	border: white;
+.buttonstart{
+	background-image: url(bouttons/Start.png) ;
   /* préserve les ratios */
   min-width: 100%;
   min-height: 100%;
+  margin-top: 80px;
+}
+.buttonregle{
+	background-image: url(bouttons/Regle.png);  
+ /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+  margin-top: 310px;
+}
+.buttonrapport{
+	background-image: url(bouttons/Rapport.png);  
+ /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+  margin-top: 540px;
+
 }
 button{
-	background-size: 200px;
+	background-repeat:no-repeat;
+	background-color: rgba(255, 255, 255, 0);/*transparent*/
+	border: white;
+	background-size: 300px;
 	position: absolute;
+	margin-left: 650px;
 
 }
