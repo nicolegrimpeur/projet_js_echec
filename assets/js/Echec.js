@@ -5,12 +5,11 @@ class Echec {
     constructor() {
         this.grid = new Array(8); // tableau de position en 8*8
         this.tour = 0; // nombre pair : joueur 0, nombre impair : joueur 1
-        this.currentPlayer = 0;
         this.pions_manges = []; // stocke les pions qui ont été mangé
         this.echec = [false]; // stock si le roi est en echec ou non et quel pion le menace
         this.deja_dans_affiche = false;
         this.mat = undefined;
-        this.points = [0, 0];
+        this.fini = undefined;
         this.pseudo_joueur1 = "pseudo1";
         this.pseudo_joueur2 = "pseudo2";
         this.init_grid();
@@ -57,8 +56,8 @@ class Echec {
             }
         }
 
-        this.grid[1][0] = new Pion(0, 0, 1);
-        this.grid[1][2] = new Pion(0, 2, 1);
+        // this.grid[1][0] = new Pion(0, 0, 1);
+        // this.grid[1][2] = new Pion(0, 2, 1);
 
         let random = Math.floor(Math.random() * 2);
         this.joueur_blanc = new Joueur(((random) ? this.pseudo_joueur1 : this.pseudo_joueur2), 0);
@@ -67,6 +66,8 @@ class Echec {
         this.tour = 0;
         this.pions_manges = [];
         this.mat = undefined;
+        this.fini = undefined;
+        this.echec = [false];
     }
 
     // renvoi le joueur
@@ -95,15 +96,15 @@ class Echec {
 
     // affiche lors du clic sur une case les cases possibles et les pions qui peuvent être pris
     affiche(x_pos, y_pos) {
-        console.log("affiche");
         // récupère la case
         let pion = this.getCaseState(x_pos, y_pos);
         let case_tmp;
         let list_deplacement = [];
         let capa_copie;
 
+        console.log(this.isFinished());
         // vérifie que la case cliqué contient un pion
-        if (pion != undefined && pion.color == this.getCurrentPlayer() && (!this.fini || !this.isFinished())) {
+        if (pion != undefined && pion.color == this.getCurrentPlayer() && !this.isFinished()) {
             capa_copie = pion.capacite_de_deplacement;
 
             if (pion.type == "Roi" && !this.deja_dans_affiche) {
@@ -189,6 +190,7 @@ class Echec {
                     this.new_dame(x_clic, y_clic);
                     this.isEchec(x_clic, y_clic);
                     this.mat = undefined;
+                    this.fini = undefined;
                     return true;
                 }
             }
@@ -274,20 +276,16 @@ class Echec {
 
     // mat
     isMat(color) {
-        console.log("this.mat", this.mat, this.tour);
         if (this.mat == undefined) {
             let pion;
-            console.log("je rentre dans mat");
             for (let j = 0; j < 8; ++j) {
                 for (let i = 0; i < 8; ++i) {
                     pion = this.getCaseState(i, j);
-                    console.log(pion);
                     if (pion != undefined) {
                         if (pion.type == "Roi" && pion.color == color) {
-                            console.log("je vais manger");
                             if (this.affiche(i, j).length == 0 && this.echec[0]) {
-                                console.log("mat");
                                 this.mat = true;
+                                console.log(this.mat);
                                 return [true, pion.color, i, j];
                             }
                         }
@@ -296,7 +294,6 @@ class Echec {
             }
             this.mat = false;
         }
-        console.log("sort");
         return [this.mat];
     }
 
@@ -324,18 +321,20 @@ class Echec {
 
     // détermine s'il y a un gagnant ou non
     isFinished() {
-        console.log("is_finished ?")
-            if (this.isMat()[0]) {
-                console.log("fini mat");
+        if (this.fini == undefined) {
+            this.fini = false;
+            if (this.isMat(0)[0] || this.isMat(1)[0]) {
+                this.fini = true;
                 return true;
             } else {
                 for (let pion of this.pions_manges) {
                     if (pion[0].type == "Roi") {
-                        console.log("le roi est mangé");
+                        this.fini = true;
                         return true;
                     }
                 }
             }
-        return false;
+        }
+        return this.fini;
     }
 }
