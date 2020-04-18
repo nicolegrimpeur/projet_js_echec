@@ -8,19 +8,19 @@ class Joueur {
     // ajoute les points au joueur en fonction du pion mangé
     ajout_points(type) {
         if (type == "Dame") {
-            this.points += 9;
+            this.points += 8.8;
         }
         else if (type == "Tour") {
-            this.points += 5;
+            this.points += 5.1;
         }
         else if (type == "Cavalier") {
-            this.points += 3;
+            this.points += 3.2;
         }
         else if (type == "Fou") {
-            this.points += 3;
+            this.points += 3.33;
         }
         else if (type == "Pion") {
-            this.points += 1;
+            this.points += 1.0;
         }
     }
 }
