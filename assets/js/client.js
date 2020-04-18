@@ -1,24 +1,18 @@
-function $_GET(param) {
-	var vars = {};
-	window.location.href.replace( location.hash, '' ).replace( 
-		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-		function( m, key, value ) { // callback
-			vars[key] = value !== undefined ? value : '';
-		}
-	);
- 	if ( param ) return vars[param] ? vars[param] : null;
-	return vars;
-};
+import("./getParam.js");
 
-var pseudo = $_GET('pseudo'), couleur = $_GET('couleur');
+var pseudo = $_GET('pseudo'), couleur = $_GET('couleur'); // récupère le pseudo et la couleur du joueur
 
 console.log(pseudo + " " + couleur);
 
 if (pseudo != null) { // remplacement du message d'acceuil
     document.getElementById("hello").textContent = "Salutation " + pseudo + " !";
-    document.getElementById("choix").textContent = "Tu as choisi les " + couleur;
+    if (couleur != "lambda") document.getElementById("choix").textContent = "Tu as choisi les " + couleur;
+    else document.getElementById("choix").textContent = "Tu as choisi une couleur aléatoire";
     //document.getElementById("choix").insertAdjacentText("afterend", "Tu as choisi les " + couleur);
+    document.getElementById("pseudo").setAttribute("value", pseudo);
+    document.getElementById("couleur").setAttribute("value", couleur);
 }
+
 
 (function () {
     const socket = io.connect('http://localhost:8100');
