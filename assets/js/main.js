@@ -7,6 +7,6 @@ Number.prototype.between = function(lower, upper) {
 
 (function() {
     let game = new Echec();
-    let view = new EchecView(game, "echec1");
+    let view = new EchecView(game, "Plateau de jeu");
 })();
 

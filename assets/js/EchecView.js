@@ -5,11 +5,17 @@ class EchecView {
         this.click = []; // stocke les coordonnées du premier clic
         let tab = document.getElementById("tab"); // permet d'enlever le premier enfant texte du tableau
         tab.removeChild(tab.firstChild);
+        this.modif_title();
         this.create_grid();
         this.affiche_pion();
         this.create_listeneurs();
 
         this.nom_joueur();
+    }
+
+    // modifie le titre de la page
+    modif_title() {
+        document.getElementById("titre").textContent = this.name;
     }
 
     // creer la grille
@@ -47,11 +53,7 @@ class EchecView {
 
                 // teste en fonction de la grille du jeu quel image doit être placé
                 if (this.game.grid[i][j] != undefined) {
-                    if (this.game.grid[i][j].color == 0) {
-                        img.setAttribute("src", "../img/blanc/" + String(this.game.grid[i][j].type) + ".png");
-                    } else {
-                        img.setAttribute("src", "../img/noir/" + String(this.game.grid[i][j].type) + ".png");
-                    }
+                    img.setAttribute("src", "../img/" + ((this.game.grid[i][j].color) ? "noir" : "blanc") + "/" + String(this.game.grid[i][j].type) + ".png");
                     td.appendChild(img);
                 }
             }
@@ -110,19 +112,11 @@ class EchecView {
         }
         // affiche les positions où le joueur peut aller
         else if (value[0] == "affiche") {
-            let td;
-
             // on supprime toutes les cases possédant une couleur
-            while (document.getElementsByClassName("vert").length != 0) {
-                td = document.getElementsByClassName("vert");
-                this.color_black(td);
-            }
+            this.suppr_color("vert");
+            this.suppr_color("rouge");
 
-            while (document.getElementsByClassName("rouge").length != 0) {
-                td = document.getElementsByClassName("rouge");
-                this.color_black(td);
-            }
-
+            let td;
             let list_possible = this.game.affiche(value[1], value[2]);
             for (let case_tmp of list_possible) {
                 td = document.getElementById(String(case_tmp[1]) + String(case_tmp[0]));
@@ -147,21 +141,9 @@ class EchecView {
                 this.modif_grid("refresh");
 
                 // supprime les couleurs déjà présentes
-                let td;
-                while (document.getElementsByClassName("vert").length != 0) {
-                    td = document.getElementsByClassName("vert");
-                    this.color_black(td);
-                }
-
-                while (document.getElementsByClassName("rouge").length != 0) {
-                    td = document.getElementsByClassName("rouge");
-                    this.color_black(td);
-                }
-
-                while (document.getElementsByClassName("orange").length != 0) {
-                    td = document.getElementsByClassName("orange");
-                    this.color_black(td);
-                }
+                this.suppr_color("vert");
+                this.suppr_color("rouge");
+                this.suppr_color("orange");
 
                 // on récupère la case du clic
                 let td_clic = document.getElementById(String(value[2]) + String(value[1]));
@@ -177,14 +159,11 @@ class EchecView {
 
                 // teste en fonction de la grille du jeu quel image doit être placé
                 if (this.game.grid[value[2]][value[1]] != undefined) {
-                    if (this.game.grid[value[2]][value[1]].color == 0) {
-                        img.setAttribute("src", "../img/blanc/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
-                    } else {
-                        img.setAttribute("src", "../img/noir/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
-                    }
+                    img.setAttribute("src", "../img/" + ((this.game.grid[value[2]][value[1]].color) ? "noir" : "blanc") + "/" + String(this.game.grid[value[2]][value[1]].type) + ".png");
                     td_clic.appendChild(img);
                 }
 
+                let td;
                 td = document.getElementById(String(this.click[1]) + String(this.click[0]));
                 td.removeChild(td.firstChild);
 
@@ -193,15 +172,19 @@ class EchecView {
 
                 // rajoute une couleur orange sous le pion qui vient d'être joué
                 td_clic.setAttribute("class", "orange");
-
-                // if (this.game.echec[0]) {
-                //     this.modif_grid(["affiche", ])
-                // }
             }
             // si on ne peut pas jouer, alors on affiche les cases où le nouveau pion cliqué
             else {
                 this.modif_grid(["affiche", value[1], value[2]]);
             }
+        }
+    }
+
+    // supprime la couleur color sur la grisse
+    suppr_color(color) {
+        while (document.getElementsByClassName(color).length != 0) {
+            let td = document.getElementsByClassName(color);
+            this.color_black(td);
         }
     }
 
@@ -233,13 +216,19 @@ class EchecView {
     // affiche le nom du joueur qui peut jouer
     nom_joueur() {
         if (this.game.echec[0]) {
-            if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_blanc.pseudo + " est en echec";
-            else document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_noir.pseudo + " est en echec ";
+            if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_blanc.pseudo + " est en échec";
+            else document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_noir.pseudo + " est en échec ";
         } else {
             if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_blanc.pseudo + " ";
             else document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_noir.pseudo + " ";
         }
         this.blason();
+    }
+
+    // affiche les scores
+    score() {
+        document.getElementById("score_blanc").textContent = String(this.game.joueur_blanc.points);
+        document.getElementById("score_noir").textContent = String(this.game.joueur_noir.points);
     }
 
     // affiche l'image du joueur qui peut jouer
@@ -257,35 +246,7 @@ class EchecView {
         img.setAttribute('class', 'blason');
 
         // on définit quel est l'image que l'on doit afficher
-        if (this.game.getCurrentPlayer() == 0) img.setAttribute('src', '../img/blason_du_joueur/joueur1.png');
-        else img.setAttribute('src', '../img/blason_du_joueur/joueur2.png');
-    }
-
-    // affiche le gagnant ou s'il y a égalité
-    affichage_gagnant() {
-        this.game.fini = undefined;
-        // cas où le jeu est fini mais qu'il y a égalité
-        if (this.game.egalite) {
-            // supprime l'image qui indique à qui le tour est
-            if (document.getElementsByClassName("blason")[0] != undefined) {
-                document.getElementsByClassName("blason")[0].remove();
-            }
-            document.getElementById("joueur").textContent = "Il y a pat ! ";
-        }
-        // affiche le joueur qui a gagné
-        else if (this.game.isFinished()) {
-            // cas où le joueur noir est mat
-            if (this.game.isMat(0)[0]) {
-                document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! " + this.game.joueur_noir.pseudo + " est echec et mat ! ";
-            }
-            // cas où le joueur blanc est mat
-            else if (this.game.isMat(1)[0]) {
-                document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! " + this.game.joueur_blanc.pseudo + " est echec et mat ! ";
-            } else {
-                if (this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! ";
-                else if (!this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! ";
-            }
-        }
+        img.setAttribute('src', '../img/blason_du_joueur/joueur' + String(this.game.getCurrentPlayer() + 1) + '.png');
     }
 
     // affiche les pions mangés
@@ -328,6 +289,33 @@ class EchecView {
         }
     }
 
+    // affiche le gagnant ou s'il y a égalité
+    affichage_gagnant() {
+        this.game.fini = undefined;
+        // cas où le jeu est fini mais qu'il y a égalité
+        if (this.game.egalite) {
+            // supprime l'image qui indique à qui le tour est
+            if (document.getElementsByClassName("blason")[0] != undefined) {
+                document.getElementsByClassName("blason")[0].remove();
+            }
+            document.getElementById("joueur").textContent = "Il y a pat ! ";
+        }
+        // affiche le joueur qui a gagné
+        else if (this.game.isFinished()) {
+            // cas où le joueur noir est mat
+            if (this.game.isMat(0)[0]) {
+                document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! " + this.game.joueur_noir.pseudo + " est échec et mat ! ";
+            }
+            // cas où le joueur blanc est mat
+            else if (this.game.isMat(1)[0]) {
+                document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! " + this.game.joueur_blanc.pseudo + " est échec et mat ! ";
+            } else {
+                if (this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_blanc.pseudo + " a gagné ! ";
+                else if (!this.game.getWinner()) document.getElementById("joueur").textContent = this.game.joueur_noir.pseudo + " a gagné ! ";
+            }
+        }
+    }
+
     // affiche une image qui permet de relancer le jeu
     bouton_reset() {
         // on affiche pas l'image si le jeu n'a pas commencé
@@ -351,11 +339,5 @@ class EchecView {
                 this.nom_joueur();
             })
         }
-    }
-
-    // affiche les scores
-    score() {
-        document.getElementById("score_blanc").textContent = String(this.game.joueur_blanc.points);
-        document.getElementById("score_noir").textContent = String(this.game.joueur_noir.points);
     }
 }

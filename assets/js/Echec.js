@@ -287,37 +287,6 @@ class Echec {
         return false;
     }
 
-    // retourne le joueur gagnant
-    getWinner() {
-        // le gagnant est le dernier joueur à avoir joué
-        return this.getCurrentPlayer();
-    }
-
-    // peremt de savoir si le roi de la couleur color est mat ou non
-    isMat(color) {
-        // this.mat permet de vérifier que la fonction n'a pas déjà été effectué dans le tour
-        if (this.mat == undefined) {
-            let pion;
-            // parcours toutes les cases du plateau
-            for (let j = 0; j < 8; ++j) {
-                for (let i = 0; i < 8; ++i) {
-                    pion = this.getCaseState(i, j);
-                    if (pion != undefined) {
-                        // si le pion est un roi et q
-                        if (pion.type == "Roi" && pion.color == color) {
-                            if (this.affiche(i, j).length == 0 && this.echec[0]) {
-                                this.mat = true;
-                                return [true, pion.color, i, j];
-                            }
-                        }
-                    }
-                }
-            }
-            this.mat = false;
-        }
-        return [this.mat];
-    }
-
     // cherche si le pion demandé met en echec le roi ou non
     isEchec(x, y) {
         this.tour--;
@@ -339,6 +308,31 @@ class Echec {
         }
         this.echec = [false];
         return false;
+    }
+
+    // peremt de savoir si le roi de la couleur color est mat ou non
+    isMat(color) {
+        // this.mat permet de vérifier que la fonction n'a pas déjà été effectué dans le tour
+        if (this.mat == undefined) {
+            let pion;
+            // parcours toutes les cases du plateau
+            for (let j = 0; j < 8; ++j) {
+                for (let i = 0; i < 8; ++i) {
+                    pion = this.getCaseState(i, j);
+                    if (pion != undefined) {
+                        // si le pion est un roi et de la même couleur que color
+                        if (pion.type == "Roi" && pion.color == color) {
+                            if (this.affiche(i, j).length == 0 && this.echec[0]) {
+                                this.mat = true;
+                                return [true, pion.color, i, j];
+                            }
+                        }
+                    }
+                }
+            }
+            this.mat = false;
+        }
+        return [this.mat];
     }
 
     // détermine s'il y a un gagnant ou non
@@ -366,5 +360,11 @@ class Echec {
             }
         }
         return this.fini;
+    }
+
+    // retourne le joueur gagnant
+    getWinner() {
+        // le gagnant est le dernier joueur à avoir joué
+        return this.getCurrentPlayer();
     }
 }
