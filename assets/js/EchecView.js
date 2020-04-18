@@ -270,17 +270,13 @@ class EchecView {
         }
 
         // rajoute un transparent si besoin (permet d'éviter que la ligne des pions se crée uniquement lorsqu'un nouveau pion est mangé
+        div = 0;
         if (document.getElementById("mange_blanc").childElementCount == 0) {
             div = document.getElementById("mange_blanc");
-
-            img_pion = document.createElement("img");
-            img_pion.setAttribute('class', 'mange');
-            div.appendChild(img_pion);
-
-            img_pion.setAttribute("src", "../img/transparent.png");
         } else if (document.getElementById("mange_noir").childElementCount == 0) {
             div = document.getElementById("mange_noir");
-
+        }
+        if (div != 0) {
             img_pion = document.createElement("img");
             img_pion.setAttribute('class', 'mange');
             div.appendChild(img_pion);
