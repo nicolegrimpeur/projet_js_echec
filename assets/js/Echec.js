@@ -1,14 +1,9 @@
-// const Cavalier = require('./type/Cavalier');
-// const Dame = require('./type/Dame');
-// const Fou = require('./type/Fou');
-// const Pion = require('./type/Pion');
-// const Roi = require('./type/Roi');
-// const Tour = require('./type/Tour');
-import("");
+import("./Pions.js");
+//import("./Joueur.js");
 
 class Echec {
-    constructor(joueur1, joueur2) {
-        this.grid = new Array(8); // tableau de position en 8*8
+    constructor(joueur1, joueur2, grid) {
+        this.grid = grid; // tableau de position en 8*8
         this.tour = 0; // nombre pair : joueur 0, nombre impair : joueur 1
         this.pions_manges = []; // stocke les pions qui ont été mangé
         this.echec = [false]; // stock si le roi est en echec ou non et quel pion le menace
@@ -17,24 +12,20 @@ class Echec {
         this.fini = undefined;
         this.joueur1 = joueur1;
         this.joueur2 = joueur2;
-        if (this.joueur1.couleur == 0) {
-            this.joueur_blanc = this.joueur1.pseudo;
-            this.joueur_noir = this.joueur2.pseudo;
+        if (joueur1.couleur == 0) {
+            this.joueur_blanc = joueur1.pseudo;
+            this.joueur_noir = joueur2.pseudo;
         } else {
-            this.joueur_blanc = this.joueur2.pseudo;
-            this.joueur_noir = this.joueur1.pseudo;
+            this.joueur_blanc = joueur2.pseudo;
+            this.joueur_noir = joueur1.pseudo;
         }
         console.log(this.joueur_blanc + " " + this.joueur_noir);
         this.egalite = false;
-        this.init_grid();
-        this.reset();
     }
-
+    
     // initialise la taille de la liste grid
     init_grid() {
-        for (let i = 0; i < 8; ++i) {
-            this.grid[i] = Array(8);
-        }
+        this.grid;
     }
 
     // remet à 0 le tableau grid et les variables utiles

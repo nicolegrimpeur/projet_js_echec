@@ -11,7 +11,15 @@ const io = require('socket.io')(server);
 const Joueur = require('./server_modules/Joueur');
 const Echec = require('./server_modules/Echec');
 
-let nbJoueur = 0, joueur1, joueur2, game, playersIn = 0;
+let nbJoueur = 0, joueur1, joueur2, game, playersIn = 0, turn = -1, grid = 0;
+
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
 
 app.use(express.static(__dirname + '/assets/'));
 
@@ -23,19 +31,24 @@ app.get('/lobby.html', (req, res, next) => {
     let pseudo = req.param("pseudo");
     let couleur = req.param("couleur");
 
-    if (pseudo != null) { // création des joueurs
-        if (joueur1 == null) {
-            if (req.param("couleur") == "noirs") {
-                joueur1 = new Joueur(pseudo, "noirs");
-            } else joueur1 = new Joueur(pseudo, "blancs");
-        } else if (joueur1.couleur == 0) {
-            joueur2 = new Joueur(pseudo, "noirs");
-        } else joueur2 = new Joueur(pseudo, "blancs");
+    if (!playersIn) { // si les joueurs sont déjà enregistré (protection)
+        if (pseudo != null) { // création des joueurs
+            if (joueur1 == null) {
+                if (req.param("couleur") == "noirs") {
+                    joueur1 = new Joueur(pseudo, "noirs");
+                } else joueur1 = new Joueur(pseudo, "blancs");
+            } else if (joueur1.couleur == 0) {
+                joueur2 = new Joueur(pseudo, "noirs");
+            } else joueur2 = new Joueur(pseudo, "blancs");
+        }
     }
 
     console.log(pseudo + " " + couleur + " " + nbJoueur);
+    // les 2 joueurs sont-ils enregistrés ?
     if (joueur1 != null) console.log(joueur1.pseudo + " " + joueur1.couleur + " " + nbJoueur)
     if (joueur2 != null) console.log(joueur2.pseudo + " " + joueur2.couleur + " " + nbJoueur)
+    if (joueur1 != null && joueur2 != null) playersIn = 1;
+    console.log(playersIn);
 
     res.sendFile( __dirname  + '/assets/views/lobby.html');
 });
@@ -48,19 +61,25 @@ app.get('/plateau.html', (req, res, next) => {
     let pseudo = req.param("pseudo");
     let couleur = req.param("couleur");
 
-    if (pseudo != null) { // création des joueurs
-        if (joueur1 == null) {
-            if (req.param("couleur") == "noirs") {
-                joueur1 = new Joueur(pseudo, "noirs");
-            } else joueur1 = new Joueur(pseudo, "blancs");
-        } else if (joueur1.couleur == 0) {
-            joueur2 = new Joueur(pseudo, "noirs");
-        } else joueur2 = new Joueur(pseudo, "blancs");
+    if (!playersIn) { // si les joueurs sont déjà enregistré (protection)
+        if (pseudo != null) { // création des joueurs
+            if (joueur1 == null) {
+                if (req.param("couleur") == "noirs") {
+                    joueur1 = new Joueur(pseudo, "noirs");
+                } else joueur1 = new Joueur(pseudo, "blancs");
+            } else if (joueur1.couleur == 0) {
+                joueur2 = new Joueur(pseudo, "noirs");
+            } else joueur2 = new Joueur(pseudo, "blancs");
+        }
     }
 
     console.log(pseudo + " " + couleur + " " + nbJoueur);
+    // les 2 joueurs sont-ils enregistrés ?
     if (joueur1 != null) console.log(joueur1.pseudo + " " + joueur1.couleur + " " + nbJoueur)
     if (joueur2 != null) console.log(joueur2.pseudo + " " + joueur2.couleur + " " + nbJoueur)
+    if (joueur1 != null && joueur2 != null) playersIn = 1;
+    console.log(playersIn);
+
     res.sendFile(__dirname + '/assets/views/plateau.html');
 });
 
@@ -73,37 +92,38 @@ io.sockets.on('connection', (socket) => {
     socket.on('couleur?', (pseudo) => {
         socket.emit('couleur', (joueur1.pseudo == pseudo) ? joueur1.couleur : joueur2.couleur);
     });
-    
-    // les joueurs sont-ils enregistrés ?
 
     socket.on('2Players?', () => {
-        if (joueur1 != null && joueur2 != null) playersIn = 1;
-        console.log(playersIn);
         if (playersIn) {
             // socket.emit('2Players', playersIn);
             console.log(joueur1.pseudo + " " + joueur2.pseudo);
-            if (game == null) game = new Echec(joueur1, joueur2) // si la partie n'est pas créée on démarre
-        
+            //if (game == null) game = new Echec(joueur1, joueur2) // si la partie n'est pas créée on démarre
+            if (grid == 0) {
+                grid = new Array(8);
+                for (let i = 0; i < 8; ++i) {
+                    grid[i] = Array(8);
+                }
+                turn = 0;
+            }
             //console.log(game.getCurrentPlayer());
-            game.getCurrentPlayer() == 0 ? turn = 0 : turn = 1;
-            io.emit('plateau', game, turn)
+            io.emit('init', grid, turn, joueur1, joueur2)
         }
     });
-
-    socket.on('plateau?', (pseudo) => {
-        
-    });
-
-    /* if (playersIn) {
-        socket.on('ready?', (pseudo) => {
-            (joueur1.pseudo == pseudo) ? joueur1.isReady = 1 : joueur2.isReady = 1;
-        });
-        if (joueur1.isReady == 1 && joueur2.isReady == 1) {
-            game = new Echec(joueur1, joueur2); // si les 2 joueurs sont prêts on démarre
-            io.emit('plateau', game);
+    
+    socket.on('refresh', (couleur) => {
+        if (turn % 2 == couleur) {
+            socket.emit('refresh', grid, turn);
         }
-        
-    } */
+    });
+    
+    socket.on('update', (newGrid, newTurn) => {
+        if (turn > newTurn) {
+            console.log(newGrid);
+            grid = newGrid;
+            turn++;
+            io.emit('refresh', grid, turn);
+        }
+    });
 
     socket.on('private message', (from, msg) => {
         console.log('Message de ', from, ' disant : ', msg);
@@ -113,9 +133,6 @@ io.sockets.on('connection', (socket) => {
         io.emit('Hello', 'Un joueur a quitté la partie');
         console.log('user disconnected');
         nbJoueur--;
-        // for(var props in Joueur){
-        //     Joueur.prop = undefined;
-        // }
     });
 });
 

@@ -1,6 +1,4 @@
 // objet contenant le fou
-const Pions = require('../Pions');
-
 class Fou extends Pions {
     constructor(couleur, x, y) {
         super(couleur, x, y, "Fou");
@@ -15,4 +13,3 @@ class Fou extends Pions {
             [[+1, -1], [+2, -2], [+3, -3], [+4, -4], [+5, -5], [+6, -6], [+7, -7]]);
     }
 }
-module.exports = Fou;
