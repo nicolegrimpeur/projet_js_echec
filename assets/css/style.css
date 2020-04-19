@@ -1,25 +1,42 @@
 table {
+    /*margin-top: 40px;*/
     border-collapse: collapse;
     border: black solid 2px;
-    background-color: #fadd90;
+    background : url(../img/Plateau/dalle/dalle-blanche.png);
 }
 
 /* id des cases */
 td {
-    border: black solid 1px;
+    border: black solid 2px ;
     display: table-cell;
     width: 70px;
     height: 70px;
-    /* padding: 37px; */
+    /*padding: 45px;*/
     text-align: center;
 }
 
 /* id du titre*/
 h3{
     text-align: center;
-    color: black;
+    color:#FFD700;
     font-size: 30px ;
     font-family: ringbearer;
+}
+
+.masthead{
+    background: url(../img/Plateau/teste2.jpg);
+    background-repeat:no-repeat;
+    background-size: 1900px ;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* préserve les ratios */
+    min-width: 100%;
+    min-height: 100%;
+}
+.score{
+    color:#FFD700;
+    font-size: 25px;
 }
 
 /* classe pour les pions */
@@ -42,8 +59,9 @@ h3{
 }
 
 .black {
-    background-color: #a76e37;
-}
+    background : url(../img/Plateau/dalle/dalle-noire.png);
+
+ }
 
 /* classe pour les blasons des personnages */
 .blason {
@@ -64,6 +82,27 @@ h3{
 }
 
 /* classe pour le score*/
-.score {
+.score-blanc {
+    margin-left:300px;
 
+}
+
+#message {
+    position: absolute;
+    margin-top: 950px;
+    
+}
+
+#envoi_message {
+    position: absolute;
+    margin-top: 950px;
+    font-size: 50px;
+    margin-left: 260px;
+
+}
+
+#zone_chat strong {
+    color: black;
+    background-color: white;
+    padding: 2px;
 }
