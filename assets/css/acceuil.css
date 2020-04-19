@@ -1,5 +1,5 @@
 .masthead{
-	background: url(Acceuil/acceuil.jpg);
+	background: url(../img/Acceuil/acceuil.jpg);
   background-size: 2050px ;
   position: fixed; 
   top: 0;
@@ -20,21 +20,21 @@
 	margin-top: 60px;
   }
 .buttonstart{
-	background-image: url(Acceuil/bouttons/Start.png) ;
+	background-image: url(../img/Acceuil/bouttons/Start.png) ;
   /* préserve les ratios */
   min-width: 100%;
   min-height: 100%;
   margin-top: 50px;
 }
 .buttonregles{
-	background-image: url(Acceuil/bouttons/Regles.png);  
+	background-image: url(../img/Acceuil/bouttons/Regles.png);  
  /* préserve les ratios */
   min-width: 100%;
   min-height: 100%;
   margin-top: 280px;
 }
 .buttonrapport{
-	background-image: url(Acceuil/bouttons/Rapport.png);  
+	background-image: url(../img/Acceuil/bouttons/Rapport.png);  
  /* préserve les ratios */
   min-width: 100%;
   min-height: 100%;
