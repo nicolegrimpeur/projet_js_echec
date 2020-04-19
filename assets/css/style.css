@@ -1,0 +1,87 @@
+table {
+    margin-top: 40px;
+    border-collapse: collapse;
+    border: black solid 2px;
+    background : url(img/Plateau/dalle/dalle-blanche.png);
+}
+
+/* id des cases */
+td {
+    border: black solid 2px ;
+    display: table-cell;
+    width: 70px;
+    height: 70px;
+    padding: 45px;
+    text-align: center;
+}
+
+/* id du titre*/
+h3{
+    text-align: center;
+    color: black;
+    font-size: 30px ;
+    font-family: ringbearer;
+}
+
+/* classe pour les pions */
+.pions {
+    height: 67px;
+    width: 67px;
+}
+
+/* classes pour les couleurs des cases */
+.vert {
+    background-color: green;
+}
+
+.rouge {
+    background-color: red;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.black {
+    background : url(img/Plateau/dalle/dalle-noire.png);
+
+ }
+
+/* classe pour les blasons des personnages */
+.blason {
+    height: 40px;
+    width: 40px;
+}
+
+/* classe du bouton reset */
+.reset {
+    height: 60px;
+    width: 60px;
+}
+
+/* classe pour les pions mangés*/
+.mange {
+    height: 40px;
+    width: 40px;
+}
+
+/* classe pour le score*/
+.score {
+
+}
+#message{ 
+    position: absolute;
+    margin-top:950px;
+    margin-left: 70px;
+ }
+ #envoi_message{
+    position: absolute;
+    margin-top:950px;
+    font-size: 50px;
+    
+ }
+ #zone_chat strong {
+            color: black;
+            background-color: white;
+            padding: 2px;
+        }
