@@ -4,44 +4,63 @@
         <meta charset="UTF-8">
         <title>Projet Echec</title>
         <link rel="stylesheet" type="text/css" href="../css/lobby.css" />
+        <script type="text/javascript" src="../js/getParam.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     </head>
+
+
     <body>
         <div class="masthead">
         <center>
-            <h1 id="hello">Bonjour nouveau joueur</h1>
-
+            <h1 id="hello"><img src="../img/bienvenue.png"></h1>
+            <BIG id="choix"></BIG>
             <form action="./lobby.html" method="GET">
                 Pseudo : <input type="text" name="pseudo" placeholder="Entrer un pseudo" />
             </form>
+            <br>
 
             <form action="./lobby.html" method="GET">
 
-                Couleur :<input type="radio" name="couleur" value="lambda" />Aléatoire
+                Couleur : &nbsp;<input type="radio" name="couleur" value="lambda" />Aléatoire 
                     <input type="radio" name="couleur" value="blancs" />Blancs
                     <input type="radio" name="couleur" value="noirs"/>Noirs
                 
+                
             </form>
-
+            <br>
             <form action="./lobby.html" method="GET">
-                    
-                Soumettre: <input type="submit" value="s'enregistrer"/>
-            </form>
+
+                <input type="submit" value="s'enregistrer"/>
 
             <form action="./lobby.html" method="GET">
                 Envoi msg au serveur: <input type="button" value="send" id="clicked">
             </form>
 
-            <form action="./lobby.html" method="GET">
-                Ràz: <a href="http://localhost:8100"><input type="button" name="reset" value="reset"/></a>
+            <form action="./plateau.html" method="GET">
+                <input id="pseudo" type="hidden" name="pseudo"/>
+                <input id="couleur" type="hidden" name="couleur"/>
             </form>
 
             <form action="./lobby.html" method="GET"> 
-                Lancer le jeu: <a href="http://localhost:8100/plateau.html"><input type="button" name="start" value="start"/></a>
+               
+                Lancer: <input type="submit" value="start registered"/>
+                Lancer le jeu: <a href="http://localhost:8100/plateau.html"><input type="button" name="start" value="start unregistered"/></a>
+
+                <input type="button" value="send msg to server" id="clicked"> <!-- Envoi un message avec le pseudo -->
+                <a href="http://localhost:8100"><input type="button" name="reset" value="reset"/></a><!-- Vide l'URL -->
             </form>
-            <script src="/socket.io/socket.io.js"></script>
-            <script src="../js/client.js"></script>
+            <script type="text/javascript" src="../js/client.js"></script>
+
+
+        
             </form>
         </center>
         </div>
+    </body>
+</html>
+
+
+            
+        <center>
     </body>
 </html>
