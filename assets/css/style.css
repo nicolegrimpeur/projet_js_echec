@@ -67,3 +67,22 @@ h3{
 .score {
 
 }
+
+#message {
+    position: absolute;
+    margin-top: 950px;
+}
+
+#envoi_message {
+    position: absolute;
+    margin-top: 950px;
+    font-size: 14px;
+    margin-left: 260px;
+
+}
+
+#zone_chat strong {
+    color: black;
+    background-color: white;
+    padding: 2px;
+}
