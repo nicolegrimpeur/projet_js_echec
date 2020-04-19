@@ -14,6 +14,10 @@ body{
 	font-size: 50px ;
 }
 
+form{
+  margin-top: -10px;
+}
+
 input[type=text]{
 	font-family: ringbearer;
 	font-size: 25px;
@@ -22,4 +26,53 @@ input[type=text]{
   padding: 12px 20px;
   box-sizing: border-box;
   border: none;
+}
+
+
+button{
+  background-repeat:no-repeat;
+  background-color: rgba(255, 255, 255, 0);/*transparent*/
+  border: white;
+  position: absolute;
+
+}
+.bouttonenregistrer{
+  position: absolute;
+  background-image: url(../img/Acceuil/bouttons/Enregistrer.png) ;
+  background-size: 160px;
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+  margin-left: -300px;
+ 
+}
+.bouttonenreset{
+position: absolute;
+  background-image: url(../img/Acceuil/bouttons/Reset.png) ;
+  background-size: 160px;
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+  margin-left: 100px;
+
+}
+.buttonregistered{
+  position: absolute;
+  background-image: url(../img/Acceuil/bouttons/Start.png) ;
+  background-size: 160px;
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+  margin-left: -250px;
+  margin-top: 60px;
+}
+
+.buttonsend{
+  position: absolute;
+  background-image: url(../img/Acceuil/bouttons/Envoyer.png) ;
+  background-size: 160px;
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+  margin-top: -33px;
 }

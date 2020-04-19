@@ -27,38 +27,39 @@
                 
                 
             </form>
-            <br>
-            <center>
-            <form action="./lobby.html" method="GET">
 
-                <input type="submit" value="s'enregistrer" id="image" />
-            </form>
-             </center>
-             <br>
-             <br>
             <form action="./lobby.html" method="GET">
-                Envoi msg au serveur: <input type="button" value="send" id="clicked">
+        
+             <button type="submit"  formaction="" class="bouttonenregistrer">
+             </button>
+             <button type="submit"  formaction="" class="bouttonenreset"></button>
+        
             </form>
+             <br>
+             <br>
+            
 
             <form action="./plateau.html" method="GET">
                 <input id="pseudo" type="hidden" name="pseudo"/>
                 <input id="couleur" type="hidden" name="couleur"/>
             </form>
-
+             <br>
             <form action="./lobby.html" method="GET"> 
-               
-                Lancer: <input type="submit" value="start registered"/>
-                Lancer le jeu: <a href="http://localhost:8100/plateau.html"><input type="button" name="start" value="start unregistered"/></a>
-
-                <input type="button" value="send msg to server" id="clicked"> <!-- Envoi un message avec le pseudo -->
-                <a href="http://localhost:8100"><input type="button" name="reset" value="reset"/></a><!-- Vide l'URL -->
+                Lancer le jeu:
+                <button type="submit" formaction="http://localhost:8100/plateau.htm" class="buttonregistered"> </button>
+ 
+            </form>
+            <br>
+            <br>
+            <br>
+            <form action="./lobby.html" method="GET">
+                Envoyer un message au serveur: <button type="submit" formaction="" class="buttonsend"></button>
             </form>
             <script type="text/javascript" src="../js/client.js"></script>
 
-
-        
             </form>
         </center>
+        <audio src="../audios/lobby.mp3" autoplay loop></audio>
         </div>
     </body>
 </html>
