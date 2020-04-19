@@ -1,0 +1,26 @@
+.masthead{
+  background: url(../img/Acceuil/acceuil.jpg);
+  background-size: 2050px ;
+  position: fixed; 
+  top: 0;
+  left: 0; 
+  /* préserve les ratios */
+  min-width: 100%;
+  min-height: 100%;
+}
+body{
+	font-family: ringbearer;
+	color: #FFD700;
+	font-size: 30px ;
+}
+
+input[type=text]{
+	font-family: ringbearer;
+	font-size: 25px;
+	color: white;
+	background-color: transparent;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: none;
+}
+  

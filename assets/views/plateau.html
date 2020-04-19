@@ -14,42 +14,39 @@
     <script type="text/javascript" src="../js/type/Fou.js"></script>
     <script type="text/javascript" src="../js/type/Tour.js"></script>
     <script type="text/javascript" src="../js/type/Roi.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="../js/formulaire.js"></script>
 </head>
 <body>
-
-<h3><span id="joueur">C'est au joueur ?</span></h3>
-
 <div class="masthead">
-    <span id="score_blanc" class="score">0</span>
-    <span id="score_noir" class="score">0</span>
+    <div class="joueur1"></div>
+       <span id="score_blanc" class="score">0</span>
+          <div id="mange_blanc">
+            <img src="../img/transparent.png" class="mange">
+          </div>
+
+        <span id="score_noir" class="score">0</span>
+         <div class="joueur2"></div>
+          <div id="mange_noir">
+            <img src="../img/transparent.png" class="mange">
+
+           </div>
     <center>
         <h1>
         <img src="../img/TheLordTournament.png"  border="0">
      </h1> 
-        
-
-        <div id="mange_blanc">
-            <img src="../img/transparent.png" class="mange">
-        </div>
-
+     <h3><span id="joueur">C'est au joueur ?</span></h3>
         <table id="tab">
         </table>
-        <br>
         
-
-        <div id="mange_noir">
-            <img src="../img/transparent.png" class="mange">
-        </div>
     </center>
     <br>
 </div>
-
 <script src="../js/main.js"></script>
-
-</body>
-</html>
-<div> 
 <form action="/" method="post" id="formulaire_chat">
+
     <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
     <input type="submit" id="envoi_message" value="Envoyer" />
 </form>
@@ -58,12 +55,5 @@
 
 </section>
 </div>
-
-
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="../socket.io/socket.io.js"></script>
-<script src="../js/formulaire.js"></script>
-<script src="../js/main.js"></script>
-
 </body>
 </html>
