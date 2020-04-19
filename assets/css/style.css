@@ -1,5 +1,5 @@
 .masthead{
-    background: url(/img/Plateau/teste2.jpg);
+    background: url(../img/Plateau/teste2.jpg);
   background-repeat:no-repeat;
   background-size: 1900px ;
   position: fixed;
@@ -14,7 +14,7 @@ table {
     margin-top: 40px;
     border-collapse: collapse;
     border: black solid 2px;
-    background : url(img/Plateau/dalle/dalle-blanche.png);
+    background : url(../img/Plateau/dalle/dalle-blanche.png);
 }
 
 /* id des cases */
@@ -55,7 +55,7 @@ h3{
 }
 
 .black {
-    background : url(img/Plateau/dalle/dalle-noire.png);
+    background : url(../img/Plateau/dalle/dalle-noire.png);
 
  }
 
@@ -83,13 +83,13 @@ h3{
 }
 #message{ 
     position: absolute;
-    margin-top:950px;
-    margin-left: 70px;
+    margin-top:850px;
  }
  #envoi_message{
     position: absolute;
-    margin-top:950px;
+    margin-top:850px;
     font-size: 50px;
+    margin-left: 260px;
     
  }
  #zone_chat strong {
