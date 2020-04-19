@@ -10,8 +10,8 @@ document.title = pseudo + ' - ' + document.title;
 // insertion dans la page de jeu
 socket.on('push_message',function(msg,pseudo) {
 
-        console.log("push_message", msg, pseudo)
-        insereMessage(pseudo+":", msg);
+    console.log("push_message", msg, pseudo)
+    insereMessage(pseudo+":", msg);
 
 
 })
