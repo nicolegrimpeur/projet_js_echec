@@ -1,5 +1,5 @@
 .masthead{
-    background: url(../img/Plateau/teste2.jpg);
+  background: url(../img/Plateau/teste2.jpg);
   background-repeat:no-repeat;
   background-size: 1900px ;
   position: fixed;
@@ -30,11 +30,17 @@ td {
 /* id du titre*/
 h3{
     text-align: center;
-    color: black;
+    color:#FFD700;
     font-size: 30px ;
     font-family: ringbearer;
 }
-
+.score{
+    color: #FFD700;
+    font-size: 25px;
+}
+#score-noir{
+    margin-top: 500px;
+}
 /* classe pour les pions */
 .pions {
     height: 67px;
@@ -78,7 +84,8 @@ h3{
 }
 
 /* classe pour le score*/
-.score {
+.score-blanc {
+    margin-left:300px;
 
 }
 #message{ 
