@@ -18,14 +18,18 @@ table {
     border: black solid 2px;
     background : url(Plateau/dalle/dalle-blanche.png);
 }
+border-collapse: collapse;
+    border: black solid 2px;
+    background-color: #fadd90;
 
 td {
     border: black solid 2px ;
     display: table-cell;
+    width: 70px;
+    height: 70px;
     padding: 45px;
     text-align: center;
 }
-
 .black {
     background : url(Plateau/dalle/dalle-noire.png);
 
