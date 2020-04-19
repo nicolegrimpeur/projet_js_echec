@@ -23,12 +23,3 @@ input[type=text]{
   box-sizing: border-box;
   border: none;
 }
-
- input[type="submit"] {
-      width: 10rem;
-      height: 10rem;
-      background-image: url(../img/boutton);
-      background-repeat: no-repeat;
-      color: red;
-      font-size: 2rem;
-    }
