@@ -86,13 +86,14 @@ h3{
 #message {
     position: absolute;
     margin-top: 950px;
-    margin-left: 70px;
+    
 }
 
 #envoi_message {
     position: absolute;
     margin-top: 950px;
     font-size: 50px;
+    margin-left: 260px;
 
 }
 
