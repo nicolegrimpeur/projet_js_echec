@@ -1,9 +1,10 @@
-const Cavalier = require('./type/Cavalier');
-const Dame = require('./type/Dame');
-const Fou = require('./type/Fou');
-const Pion = require('./type/Pion');
-const Roi = require('./type/Roi');
-const Tour = require('./type/Tour');
+// const Cavalier = require('./type/Cavalier');
+// const Dame = require('./type/Dame');
+// const Fou = require('./type/Fou');
+// const Pion = require('./type/Pion');
+// const Roi = require('./type/Roi');
+// const Tour = require('./type/Tour');
+import("");
 
 class Echec {
     constructor(joueur1, joueur2) {
@@ -375,5 +376,3 @@ class Echec {
         return this.getCurrentPlayer();
     }
 }
-
-module.exports = Echec;

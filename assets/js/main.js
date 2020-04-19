@@ -1,4 +1,5 @@
 import("./EchecView.js");
+import("../../server_modules/Echec");
 import("./getParam.js");
 
 // permet de vérifier si un nombre est compris entre deux valeurs
@@ -6,28 +7,51 @@ Number.prototype.between = function(lower, upper) {
     return lower <= this && this <= upper;
 };
 
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
+
 (function() {
     let pseudo = $_GET('pseudo'), couleur = $_GET('couleur'); // récupère le pseudo et la couleur du joueur
     console.log(pseudo + " " + couleur);
+    
+    let playersIn = new Boolean(0);
 
     const socket = io.connect('http://localhost:8100');
 
-    socket.emit('couleur?' , pseudo);
-    socket.on('couleur' , (couleur) => {
-        document.getElementById("couleur").textContent = "Tu joues les " + ((couleur == 0) ? "blancs" : "noirs");
-        console.log(couleur);
+    socket.emit('couleur?', pseudo);
+    socket.on('couleur', (couleurBin) => {
+        document.getElementById("couleur").textContent = "Tu joues les " + ((couleurBin == 0) ? "blancs" : "noirs");
+        couleur = couleurBin;
+        //console.log(couleur);
     });
 
-    socket.emit('plateau?');
-    socket.on('plateau' , (game) => {
-        let view = new EchecView(game, "Plateau de jeu");
+    socket.emit('2Players?');
+    // socket.on('2Players?', (playersIn) => {
+    //     if (playersIn) {
+    //         socket.emit('plateau?');
+    //     }
+    // });
+
+    socket.on('plateau', (game, turn) => {
+        console.log(turn);
+        let view = new EchecView(game, "Plateau de jeu", couleur);
     });
 
-    socket.emit('ready?');
-    socket.on('ready' , (pseudo) => {
-        let view = new EchecView(game, "Plateau de jeu");
-    });
+    /*while (playersIn != 1) {
+        console.log("waiting");
+        sleep(2000);
+    }*/
 
+    // socket.emit('ready?');
+    // socket.on('ready' , (pseudo) => {
+    //     let view = new EchecView(game, "Plateau de jeu");
+    // });
+    
     // MISE EN PLACE DU BOUTON PRÊT !!!
 
 
