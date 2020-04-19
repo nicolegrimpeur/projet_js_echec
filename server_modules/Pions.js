@@ -12,3 +12,4 @@ class Pions {
         return this.type;
     }
 }
+module.exports = Pions;

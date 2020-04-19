@@ -1,3 +1,6 @@
+// objet contenant la dame
+const Pions = require('../Pions');
+
 class Dame extends Pions {
     constructor(couleur, x, y) {
         super(couleur, x, y, "Dame");
@@ -16,3 +19,4 @@ class Dame extends Pions {
             [[+1, -1], [+2, -2], [+3, -3], [+4, -4], [+5, -5], [+6, -6], [+7, -7]]);
     }
 }
+module.exports = Dame;

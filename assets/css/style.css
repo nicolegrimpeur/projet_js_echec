@@ -4,6 +4,7 @@ table {
     background-color: #fadd90;
 }
 
+/* id des cases */
 td {
     border: black solid 1px;
     display: table-cell;
@@ -13,6 +14,7 @@ td {
     text-align: center;
 }
 
+/* id du titre*/
 h3{
     text-align: center;
     color: black;
@@ -26,6 +28,7 @@ h3{
     width: 67px;
 }
 
+/* classes pour les couleurs des cases */
 .vert {
     background-color: green;
 }
@@ -42,6 +45,7 @@ h3{
     background-color: #a76e37;
 }
 
+/* classe pour les blasons des personnages */
 .blason {
     height: 40px;
     width: 40px;
@@ -53,11 +57,13 @@ h3{
     width: 60px;
 }
 
+/* classe pour les pions mangés*/
 .mange {
     height: 40px;
     width: 40px;
 }
 
+/* classe pour le score*/
 /* .score {
-    
+
 } */

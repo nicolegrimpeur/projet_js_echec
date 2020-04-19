@@ -1,4 +1,6 @@
 // objet contenant le roi
+const Pions = require('../Pions');
+
 class Roi extends Pions {
     constructor(couleur, x, y) {
         super(couleur, x, y, "Roi");
@@ -17,3 +19,4 @@ class Roi extends Pions {
         }
     }
 }
+module.exports = Roi;

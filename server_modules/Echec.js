@@ -1,18 +1,22 @@
-import("./Pions.js");
-import("./Joueur.js");
+const Cavalier = require('./type/Cavalier');
+const Dame = require('./type/Dame');
+const Fou = require('./type/Fou');
+const Pion = require('./type/Pion');
+const Roi = require('./type/Roi');
+const Tour = require('./type/Tour');
 
 class Echec {
-    constructor() {
+    constructor(joueur1, joueur2) {
         this.grid = new Array(8); // tableau de position en 8*8
         this.tour = 0; // nombre pair : joueur 0, nombre impair : joueur 1
-        this.currentPlayer = 0;
         this.pions_manges = []; // stocke les pions qui ont été mangé
         this.echec = [false]; // stock si le roi est en echec ou non et quel pion le menace
         this.deja_dans_affiche = false;
         this.mat = undefined;
-        this.points = [0, 0];
-        this.pseudo_joueur1 = "pseudo1";
-        this.pseudo_joueur2 = "pseudo2";
+        this.fini = undefined;
+        this.joueur1 = joueur1;
+        this.joueur2 = joueur2;
+        this.egalite = false;
         this.init_grid();
         this.reset();
     }
@@ -57,16 +61,21 @@ class Echec {
             }
         }
 
-        this.grid[1][0] = new Pion(0, 0, 1);
-        this.grid[1][2] = new Pion(0, 2, 1);
+        if (this.joueur1.couleur == 0) {
+            this.joueur_blanc = this.joueur1.pseudo;
+            this.joueur_noir = this.joueur2.pseudo;
+        } else {
+            this.joueur_blanc = this.joueur2.pseudo;
+            this.joueur_noir = this.joueur1.pseudo;
+        }
 
-        let random = Math.floor(Math.random() * 2);
-        this.joueur_blanc = new Joueur(((random) ? this.pseudo_joueur1 : this.pseudo_joueur2), 0);
-        this.joueur_noir = new Joueur(((!random) ? this.pseudo_joueur1 : this.pseudo_joueur2), 1);
-
+        // remet à 0 les différentes variables
         this.tour = 0;
         this.pions_manges = [];
         this.mat = undefined;
+        this.fini = undefined;
+        this.echec = [false];
+        this.egalite = false;
     }
 
     // renvoi le joueur
@@ -86,6 +95,7 @@ class Echec {
 
     //permet de modifier la grille
     modif_grid(x, y, value) {
+        // vérifie que les coordonnées sont dans la grille
         if (x.between(0, 7) && y.between(0, 7)) {
             this.grid[y][x] = value;
             return true;
@@ -95,7 +105,6 @@ class Echec {
 
     // affiche lors du clic sur une case les cases possibles et les pions qui peuvent être pris
     affiche(x_pos, y_pos) {
-        console.log("affiche");
         // récupère la case
         let pion = this.getCaseState(x_pos, y_pos);
         let case_tmp;
@@ -103,9 +112,10 @@ class Echec {
         let capa_copie;
 
         // vérifie que la case cliqué contient un pion
-        if (pion != undefined && pion.color == this.getCurrentPlayer() && (!this.fini || !this.isFinished())) {
+        if (pion != undefined && pion.color == this.getCurrentPlayer() && !this.isFinished()) {
             capa_copie = pion.capacite_de_deplacement;
 
+            // si le pion est un roi, il execute la fonction affiche_roi qui récupère les positions où il n'est pas echec
             if (pion.type == "Roi" && !this.deja_dans_affiche) {
                 this.deja_dans_affiche = true;
                 capa_copie = this.affiche_roi(pion.x, pion.y);
@@ -186,9 +196,14 @@ class Echec {
                     this.modif_grid(x_clic, y_clic, pion);
                     this.modif_grid(x_pos, y_pos, undefined);
                     this.tour++;
+
+                    // rajoute une dame à la place d'un pion qui est arrivé au bout du terrain
                     this.new_dame(x_clic, y_clic);
+
+                    // test si le roi est en echec
                     this.isEchec(x_clic, y_clic);
                     this.mat = undefined;
+                    this.fini = undefined;
                     return true;
                 }
             }
@@ -196,11 +211,11 @@ class Echec {
         return false;
     }
 
-    // permet de calculer les possibilités de déplacement du roi
+    // permet de calculer les possibilités de déplacement du roi au position x, y
     affiche_roi(x, y) {
-        // console.log(this.getCaseState(x, y));
         let pion = this.getCaseState(x, y);
         if (pion != undefined) {
+            // copie la capacité de déplacement du pion
             let list_deplacement = this.getCaseState(x, y).capacite_de_deplacement.slice();
             let echec_tmp = this.echec;
             let list_echec = [];
@@ -209,17 +224,23 @@ class Echec {
             let pion_tmp;
             this.echec = [false];
 
+            // passe la case de départ sur undefined
             this.modif_grid(x, y, undefined);
+            // parcours les listes de déplacement du roi pour savoir s'il peut se déplacer dessus ou non
             for (let position_roi = 0; position_roi < list_deplacement.length; ++position_roi) {
                 x_tmp = list_deplacement[position_roi][0][0] + x;
                 y_tmp = list_deplacement[position_roi][0][1] + y;
+                // vérifie que la case temporaire du roi est une case vide et ne contient pas de pion allié
                 if (this.getCaseState(x_tmp, y_tmp) == undefined || this.getCaseState(x_tmp, y_tmp).color != pion.color) {
                     pion_tmp = this.getCaseState(x_tmp, y_tmp);
+                    // on déplace le roi sur la case temporaire
                     if (this.modif_grid(x_tmp, y_tmp, pion)) {
 
+                        // on vérifie qu'aucun pion ne met en danger le roi
                         for (let j = 0; j < 8; ++j) {
                             for (let i = 0; i < 8; ++i) {
                                 if (i != x || j != y) {
+                                    // si la case met en echec le roi, alors il ne peut pas se déplacer dessus
                                     if (this.isEchec(i, j)) {
                                         list_echec.push([x_tmp, y_tmp]);
                                     }
@@ -227,13 +248,15 @@ class Echec {
                             }
                         }
 
+                        // on replace la case de départ et on supprime le roi de cette case
                         this.modif_grid(x_tmp, y_tmp, pion_tmp);
                     }
                 }
             }
+            // on replace le roi à sa position initiale
             this.modif_grid(x, y, pion);
 
-
+            // case à suppr contient les indices des cases de la liste de déplacement du roi à supprimer
             let case_a_suppr = [];
             for (let case_echec of list_echec) {
                 for (let compteur = 0; compteur < list_deplacement.length; ++compteur) {
@@ -243,9 +266,11 @@ class Echec {
                 }
             }
 
+            // on trie la liste de manière décroissante
             case_a_suppr.sort();
             case_a_suppr.reverse();
 
+            // on supprime les éléments correspondant aux indices à supprimer
             for (let ind of case_a_suppr) {
                 list_deplacement.splice(ind, 1);
             }
@@ -259,7 +284,9 @@ class Echec {
     // fonction qui ajoute la dame lorsque l'on arrive au bout du plateau
     new_dame(x, y) {
         let pion = this.getCaseState(x, y);
+        // vérifie que le pion est de type Pion
         if (pion.type == "Pion") {
+            // vérifie que le pion est au bout du plateau
             if ((pion.color == 0 && y == 0) || (pion.color == 1 && y == 7)) {
                 this.modif_grid(x, y, new Dame(pion.color, x, y));
             }
@@ -267,50 +294,18 @@ class Echec {
         return false;
     }
 
-    // retourne le joueur gagnant
-    getWinner() {
-        return this.getCurrentPlayer();
-    }
-
-    // mat
-    isMat(color) {
-        console.log("this.mat", this.mat, this.tour);
-        if (this.mat == undefined) {
-            let pion;
-            console.log("je rentre dans mat");
-            for (let j = 0; j < 8; ++j) {
-                for (let i = 0; i < 8; ++i) {
-                    pion = this.getCaseState(i, j);
-                    console.log(pion);
-                    if (pion != undefined) {
-                        if (pion.type == "Roi" && pion.color == color) {
-                            console.log("je vais manger");
-                            if (this.affiche(i, j).length == 0 && this.echec[0]) {
-                                console.log("mat");
-                                this.mat = true;
-                                return [true, pion.color, i, j];
-                            }
-                        }
-                    }
-                }
-            }
-            this.mat = false;
-        }
-        console.log("sort");
-        return [this.mat];
-    }
-
-    // roi en echec
+    // cherche si le pion demandé met en echec le roi ou non
     isEchec(x, y) {
         this.tour--;
-        // console.log("echec");
         let list_pions = this.affiche(x, y);
         this.tour++;
 
         let pion;
+        // parcours les positions où le pion peut se déplacer
         for (let case_tmp of list_pions) {
             pion = this.getCaseState(case_tmp[0], case_tmp[1]);
             if (pion != undefined) {
+                // si un roi est dessus, alors le roi est echec
                 if (pion.type == "Roi" && pion.color != this.getCaseState(x, y).color) {
                     this.echec[0] = true;
                     this.echec.push([x, y]);
@@ -322,20 +317,63 @@ class Echec {
         return false;
     }
 
-    // détermine s'il y a un gagnant ou non
-    isFinished() {
-        console.log("is_finished ?")
-            if (this.isMat()[0]) {
-                console.log("fini mat");
-                return true;
-            } else {
-                for (let pion of this.pions_manges) {
-                    if (pion[0].type == "Roi") {
-                        console.log("le roi est mangé");
-                        return true;
+    // peremt de savoir si le roi de la couleur color est mat ou non
+    isMat(color) {
+        // this.mat permet de vérifier que la fonction n'a pas déjà été effectué dans le tour
+        if (this.mat == undefined) {
+            let pion;
+            // parcours toutes les cases du plateau
+            for (let j = 0; j < 8; ++j) {
+                for (let i = 0; i < 8; ++i) {
+                    pion = this.getCaseState(i, j);
+                    if (pion != undefined) {
+                        // si le pion est un roi et de la même couleur que color
+                        if (pion.type == "Roi" && pion.color == color) {
+                            if (this.affiche(i, j).length == 0 && this.echec[0]) {
+                                this.mat = true;
+                                return [true, pion.color, i, j];
+                            }
+                        }
                     }
                 }
             }
-        return false;
+            this.mat = false;
+        }
+        return [this.mat];
+    }
+
+    // détermine s'il y a un gagnant ou non
+    isFinished() {
+        // this.fini permet de savoir si l'on a déjà effectué la boucle ou non
+        if (this.fini == undefined) {
+            this.fini = false;
+            // cas où l'un des rois est mat
+            if (this.isMat(0)[0] || this.isMat(1)[0]) {
+                this.fini = true;
+                return true;
+            }
+            // cas où il ne reste que les deux rois sur le terrain, il y a égalité
+            if (this.pions_manges.length == 30) {
+                this.fini = true;
+                this.egalite = true;
+                return true;
+            }
+            // si un des rois a été mangé, alors le jeu est fini
+            for (let pion of this.pions_manges) {
+                if (pion[0].type == "Roi") {
+                    this.fini = true;
+                    return true;
+                }
+            }
+        }
+        return this.fini;
+    }
+
+    // retourne le joueur gagnant
+    getWinner() {
+        // le gagnant est le dernier joueur à avoir joué
+        return this.getCurrentPlayer();
     }
 }
+
+module.exports = Echec;
