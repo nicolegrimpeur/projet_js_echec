@@ -1,20 +1,8 @@
-.masthead{
-    background: url(/img/Plateau/teste2.jpg);
-  background-repeat:no-repeat;
-  background-size: 1900px ;
-  position: fixed;
-  top: 0;
-  left: 0; 
-  /* préserve les ratios */
-  min-width: 100%;
-  min-height: 100%;
-
-}
 table {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
     border-collapse: collapse;
     border: black solid 2px;
-    background : url(img/Plateau/dalle/dalle-blanche.png);
+    background : url(../img/Plateau/dalle/dalle-blanche.png);
 }
 
 /* id des cases */
@@ -23,7 +11,7 @@ td {
     display: table-cell;
     width: 70px;
     height: 70px;
-    padding: 45px;
+    /*padding: 45px;*/
     text-align: center;
 }
 
@@ -33,6 +21,18 @@ h3{
     color: black;
     font-size: 30px ;
     font-family: ringbearer;
+}
+
+.masthead{
+    background: url(../img/Plateau/teste2.jpg);
+    background-repeat:no-repeat;
+    background-size: 1900px ;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* préserve les ratios */
+    min-width: 100%;
+    min-height: 100%;
 }
 
 /* classe pour les pions */
@@ -55,7 +55,7 @@ h3{
 }
 
 .black {
-    background : url(img/Plateau/dalle/dalle-noire.png);
+    background : url(../img/Plateau/dalle/dalle-noire.png);
 
  }
 
@@ -81,19 +81,22 @@ h3{
 .score {
 
 }
-#message{ 
+
+#message {
     position: absolute;
-    margin-top:950px;
+    margin-top: 950px;
     margin-left: 70px;
- }
- #envoi_message{
+}
+
+#envoi_message {
     position: absolute;
-    margin-top:950px;
+    margin-top: 950px;
     font-size: 50px;
-    
- }
- #zone_chat strong {
-            color: black;
-            background-color: white;
-            padding: 2px;
-        }
+
+}
+
+#zone_chat strong {
+    color: black;
+    background-color: white;
+    padding: 2px;
+}
