@@ -1,9 +1,9 @@
 # Projet de Javascript de fin de CIR2
 
 ## Membres:
-Fabien Amelinck
-Nicolas Barrat
-Florence Dubois
+Fabien Amelinck,
+Nicolas Barrat,
+Florence Dubois,
 Cheikh Saliou Niang
 
 ISEN Lille CIR2
