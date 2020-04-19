@@ -18,7 +18,7 @@ td {
 /* id du titre*/
 h3{
     text-align: center;
-    color: black;
+    color:#FFD700;
     font-size: 30px ;
     font-family: ringbearer;
 }
@@ -78,7 +78,8 @@ h3{
 }
 
 /* classe pour le score*/
-.score {
+.score-blanc {
+    margin-left:300px;
 
 }
 
