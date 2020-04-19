@@ -34,9 +34,12 @@ function sleep(milliseconds) {
     socket.emit('2Players?');
 
     socket.on('init', (grid, turn, joueur1, joueur2) => {
-        console.log(turn);
         turnTmp = turn;
         gridTmp = grid;
+        
+        console.log(turnTmp);
+        console.log(gridTmp);
+
         if (game == null) {
             game = new Echec(grid, joueur1, joueur2);
             view = new EchecView(game, "Plateau de jeu", couleur, joueur1, joueur2);
