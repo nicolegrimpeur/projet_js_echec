@@ -7,7 +7,7 @@ import("./getParam.js");
     
     var view = 0, game, tab;
 
-    const socket = io.connect('http://localhost:8100');
+    const socket = io.connect('http://localhost:26000');
 
     socket.emit('nouveau_client', pseudo);
     document.title = pseudo + ' - ' + document.title;
@@ -37,7 +37,7 @@ import("./getParam.js");
 
     socket.on('couleur', (couleurBin) => {
         document.getElementById("couleur").textContent = "Tu joues les " + ((couleurBin == 0) ? "blancs" : "noirs");
-        console.log(pseudo + " " + ((couleurBin == 0) ? "blancs" : "noirs"));
+        // console.log(pseudo + " " + ((couleurBin == 0) ? "blancs" : "noirs"));
         couleur = couleurBin;
     });
 
@@ -46,7 +46,7 @@ import("./getParam.js");
 
     // initialisation du plateau
     socket.on('init', (turn, joueur1, joueur2) => {
-        console.log(joueur1.pseudo + " contre " + joueur2.pseudo);
+        // console.log(joueur1.pseudo + " contre " + joueur2.pseudo);
 
         tab = document.getElementById("tab");
         while (tab.firstChild) {
