@@ -12,6 +12,6 @@ ISEN Lille CIR2
 
 Rapport expliquant le fonctionnement et détaillant la réalisation de ce projet : https://cutt.ly/projet_echec
 
-Vidéo de présentation du jeu :
+Vidéo de présentation du jeu : https://youtu.be/qV8Je6S4Eg4
 
-Lien pour jouer en ligne : http://137.74.114.247:8100/
+Lien pour jouer en ligne : http://137.74.114.247:26000/
