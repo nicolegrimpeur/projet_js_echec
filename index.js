@@ -9,16 +9,7 @@ const io = require('socket.io')(server);
 
 const Joueur = require('./server_modules/Joueur');
 
-var nbJoueur = 0, nbInGame = 0, joueur1, joueur2, clients = [], playersIn = 0, turn = 0, grid = 0;
-
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    console.log("sleeping");
-    do {
-        currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-}
+let nbJoueur = 0, nbInGame = 0, joueur1, joueur2, clients = [], playersIn = 0, turn = 0, grid = 0;
 
 app.use(express.static(__dirname + '/assets/'));
 app.use(bodyParser.json());
@@ -33,51 +24,17 @@ app.post('/',(req,res,next)=>{
 });
 
 app.get('/lobby.html', (req, res, next) => {
-    let psdo = req.param("pseudo");
-    let colr = req.param("couleur");
-    //console.log(psdo + " " + colr + " " + nbJoueur);
-
-    if (psdo != null && !playersIn) { // si les joueurs sont déjà enregistré (protection)
-        if (joueur1 == null) { // création des joueurs
-            if (colr == "noirs" || colr == 1) {
-                joueur1 = new Joueur(psdo, "noirs");
-            } else joueur1 = new Joueur(psdo, "blancs");
-        } else if (psdo != joueur1.pseudo) {
-            if (joueur1.couleur == 0) joueur2 = new Joueur(psdo, "noirs");
-            else joueur2 = new Joueur(psdo, "blancs");
-        }
-    } else {
-        console.log(joueur1.pseudo + " " + joueur1.couleur + " " + nbJoueur)
-        console.log(joueur2.pseudo + " " + joueur2.couleur + " " + nbJoueur)
-    }
+    let psdo = req.param("pseudo"), colr = req.param("couleur");
     
-    if (joueur1 != null && joueur2 != null) playersIn = 1;
-    //console.log(playersIn);
+    createPlayer(psdo, colr);
 
     res.sendFile( __dirname  + '/assets/views/lobby.html');
 });
 
 app.get('/plateau.html', (req, res, next) => {
-    let psdo = req.param("pseudo");
-    let colr = req.param("couleur");
-    //console.log(psdo + " " + colr + " " + nbJoueur);
+    let psdo = req.param("pseudo"), colr = req.param("couleur");
 
-    if (psdo != null && !playersIn) { // si les joueurs sont déjà enregistré (protection)
-        if (joueur1 == null) { // création des joueurs
-            if (colr == "noirs" || colr == 1) {
-                joueur1 = new Joueur(psdo, "noirs");
-            } else joueur1 = new Joueur(psdo, "blancs");
-        } else if (psdo != joueur1.pseudo) {
-            if (joueur1.couleur == 0) joueur2 = new Joueur(psdo, "noirs");
-            else joueur2 = new Joueur(psdo, "blancs");
-        }
-    } else {
-        console.log(joueur1.pseudo + " " + joueur1.couleur + " " + nbJoueur)
-        console.log(joueur2.pseudo + " " + joueur2.couleur + " " + nbJoueur)
-    }
-
-    if (joueur1 != null && joueur2 != null) playersIn = 1;
-    //console.log(playersIn);
+    createPlayer(psdo, colr);
 
     res.sendFile(__dirname + '/assets/views/plateau.html');
 });
@@ -136,17 +93,38 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('disconnect', (reason) => {
-        console.log('user disconnected for ', reason);
+        console.log('user disconnected for', reason);
         let index=clients.indexOf(socket)
         if(index!==-1) clients.splice(index,1)
 
         nbJoueur--;
         if (!nbJoueur) {
-            joueur1 = null, joueur2 = null, playersIn = 0, nbInGame = 0, turn = 0, grid = 0;
+            playersIn = 0, nbInGame = 0, turn = 0, grid = 0;
             console.log("server reseted !");
         }
     });
 });
+
+createPlayer = (psdo, colr) => {
+    console.log(psdo + " " + colr + " " + nbJoueur);
+
+    if(psdo !=null) {
+        if (!playersIn) { // si les joueurs sont déjà enregistré (protection)
+            if (joueur1 == null) { // création des joueurs
+                if (colr == "noirs" || colr == 1) {
+                    joueur1 = new Joueur(psdo, "noirs");
+                } else joueur1 = new Joueur(psdo, "blancs");
+            } else if (psdo != joueur1.pseudo) {
+                if (joueur1.couleur == 0) joueur2 = new Joueur(psdo, "noirs");
+                else joueur2 = new Joueur(psdo, "blancs");
+            }
+        } else {
+            console.log(joueur1.pseudo + " " + joueur1.couleur + " " + nbJoueur)
+            console.log(joueur2.pseudo + " " + joueur2.couleur + " " + nbJoueur)
+        }
+    }
+    if (joueur1 != null && joueur2 != null) playersIn = 1;
+}
 
 server.listen(port);
 console.log('Server instantiated');

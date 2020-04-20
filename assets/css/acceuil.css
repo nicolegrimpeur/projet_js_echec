@@ -55,6 +55,7 @@ h1 {
     font-size: 30px;
     font-family: ringbearer;
     margin-top: 60px;
+    border: 0;
 }
 
 button {
@@ -63,5 +64,5 @@ button {
     border: white;
     background-size: 300px;
     position: absolute;
-    margin-left: 650px;
+    margin-left: -180px;
 }

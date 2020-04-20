@@ -3,8 +3,6 @@ class EchecView {
         this.game = game;
         this.name = name;
         this.couleur = couleur;
-        // this.game.joueur1 = game.joueur1;
-        // this.game.joueur2 = game.joueur2;
         this.click = []; // stocke les coordonnées du premier clic
         this.modif_title();
         this.create_grid();

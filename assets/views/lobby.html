@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Enregistrement</title>
+        <link rel="stylesheet" type="text/css" href="../css/lobby.css"/>
+        <script type="text/javascript" src="../js/getParam.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <div class="masthead">
+        <center>
+            <h3 id="hello"><img src="../img/bienvenue.png"></h3>
+            <h3 id="choix"></h3>
+            
+            <a >
+                <form action="./lobby.html" method="GET">
+                    Pseudo : <input type="text" name="pseudo" placeholder="Entrer un pseudo" />
+                    
+                    <br>
+                    
+                    Couleur : <input type="radio" name="couleur" value="lambda"/>Aléatoire 
+                        <input type="radio" name="couleur" value="blancs"/>Blancs
+                        <input type="radio" name="couleur" value="noirs"/>Noirs
+                    
+                    <button type="submit" class="bouttonenregistrer"></button>
+                </form>
+            </a>
+            <!-- Vide l'URL<br><br> -->
+            <a href="http://localhost:8100"><button class="bouttonenreset"></button></a> 
+            
+            <br>
+
+            <form action="./plateau.html" method="GET" style="margin-top: 5%">
+                <input id="pseudo" type="hidden" name="pseudo"/>
+                <input id="couleur" type="hidden" name="couleur"/>
+
+                Enregistrez vous avant de lancer le jeu: <button type="submit" class="buttonregistered"> </button>
+            </form>
+
+            <br><br><br>
+            <a style="margin-left: -7%">
+                Envoyer un message au serveur: <button id="clicked" class="buttonsend"></button><!-- Envoi un message avec le pseudo -->
+            </a>
+        </center>
+        <audio src="../audios/acceuil.mp3" autoplay loop></audio>
+        <script type="text/javascript" src="../js/client.js"></script>
+        </div>
+    </body>
+</html>

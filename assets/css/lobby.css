@@ -1,0 +1,86 @@
+.masthead{
+    background: url(../img/Acceuil/acceuil.jpg);
+    background-size: 2050px ;
+    position: fixed; 
+    top: 0;
+    left: 0; 
+    /* préserve les ratios */
+    min-width: 100%;
+    min-height: 100%;
+}
+
+body{
+	font-family: ringbearer;
+	color: #FFD700;
+	font-size: 50px ;
+}
+
+form{
+    margin-top: -50px;
+}
+
+input[type=text]{
+	font-family: ringbearer;
+	font-size: 25px;
+	color: white;
+	background-color: transparent;
+    padding: 20px;
+    box-sizing: border-box;
+    border: none;
+}
+
+input[type=radio]{
+    margin: 10px;
+    margin-top: 5%;
+}
+
+button{
+    background-repeat:no-repeat;
+    background-color: rgba(255, 255, 255, 0);/*transparent*/
+    border: white;
+    position: absolute;
+}
+
+.bouttonenregistrer{
+    position: absolute;
+    background-image: url(../img/Acceuil/bouttons/Enregistrer.png) ;
+    background-size: 8%;
+    /* préserve les ratios */
+    min-width: 100%;
+    min-height: 100%;
+    margin-left: -32%;
+    margin-top: 7%;
+}
+
+.bouttonenreset{
+    position: absolute;
+    background-image: url(../img/Acceuil/bouttons/Reset.png) ;
+    background-size: 8%;
+    /* préserve les ratios */
+    min-width: 100%;
+    min-height: 100%;
+    margin-left: 4%;
+    margin-top: 1%;
+}
+
+.buttonregistered{
+    position: absolute;
+    background-image: url(../img/Acceuil/bouttons/Start.png) ;
+    background-size: 8%;
+    /* préserve les ratios */
+    min-width: 100%;
+    min-height: 100%;
+    margin-left: -25%;
+    margin-top: 4%;
+}
+
+.buttonsend{
+    position: absolute;
+    background-image: url(../img/Acceuil/bouttons/Envoyer.png) ;
+    background-size: 8%;
+    /* préserve les ratios */
+    min-width: 100%;
+    min-height: 100%;
+    margin-left: 0.5%;
+    margin-top: -1.3%;
+}

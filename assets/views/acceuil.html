@@ -4,47 +4,25 @@
         <meta charset="UTF-8">
         <title>Acceuil</title>
         <link rel="stylesheet" type="text/css" href="../css/acceuil.css"/>
-        <script type="text/javascript" src="../js/getParam.js"></script>
-        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     </head>
     <body>
-        <center>
-            <br /><br /><br /><br /><br /><br /><br />
-            <BIG id="hello">Bonjour nouveau joueur</BIG>
-            <br />
-            <BIG id="choix"></BIG>
-            <br /><br />
+        <div class="masthead">
+            <h1><img src="../img/TheLordsTournament.png"/></h1>
+            <center>
+            <ol class="absolute" class="container">
+                <a href="http://localhost:8100/lobby.html">
+                    <button class="buttonstart"></button>
+                </a>
+                <a href="https://www.chess.com/fr/apprendre-a-jouer-aux-echecs">
+                    <button class="buttonregles"></button>
+                </a>
+                <a href="https://yncrea-my.sharepoint.com/:b:/g/personal/nicolas_barrat_isen_yncrea_fr/ETRqMg4JIo5IogVgLcRiQpsBA8MT1N6W3rbsbBlnYBRsyw?e=k57Ucr">
+                    <button class="buttonrapport"></button>
+                </a>
+            </ol>
 
-            <form action="./lobby.html" method="GET">
-                Pseudo : <input type="text" name="pseudo" placeholder="Entrer un pseudo"/><br /><br />
-
-                Couleur : <input type="radio" name="couleur" value="lambda"/>Aléatoire<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <input type="radio" name="couleur" value="blancs"/>Blancs<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <input type="radio" name="couleur" value="noirs"/>Noirs<br /><br />
-                
-                <input type="submit" value="s'enregistrer"/>
-            </form>
-
-            <br /><br />
-
-            <form action="./plateau.html" method="GET">
-                <input id="pseudo" type="hidden" name="pseudo"/>
-                <input id="couleur" type="hidden" name="couleur"/>
-
-                Lancer: <input type="submit" value="start registered"/>
-                Lancer le jeu: <a href="http://localhost:8100/plateau.html"><input type="button" name="start" value="start unregistered"/></a>
-            </form>
-
-            <br /> <br />
-            <input type="button" value="send msg to server" id="clicked"> <!-- Envoi un message avec le pseudo -->
-            <a href="http://localhost:8100"><input type="button" name="reset" value="reset"/></a> <br /><br /> <!-- Vide l'URL -->
-
-
-            <script type="text/javascript" src="../js/client.js"></script>
-        <center>
+            </center>
+            <audio src="../audios/acceuil.mp3" autoplay loop></audio>
+        </div>
     </body>
 </html>

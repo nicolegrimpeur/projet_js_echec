@@ -36,7 +36,7 @@ import("./getParam.js");
     socket.emit('couleur?', pseudo);
 
     socket.on('couleur', (couleurBin) => {
-        //document.getElementById("couleur").textContent = "Tu joues les " + ((couleurBin == 0) ? "blancs" : "noirs");
+        document.getElementById("couleur").textContent = "Tu joues les " + ((couleurBin == 0) ? "blancs" : "noirs");
         console.log(pseudo + " " + ((couleurBin == 0) ? "blancs" : "noirs"));
         couleur = couleurBin;
     });
