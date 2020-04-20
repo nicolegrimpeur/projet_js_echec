@@ -65,7 +65,8 @@ button {
     background-size: 300px;
     position: absolute;
     margin-left: -180px;
-=======
+}
+
 .masthead{
 	background: url(../img/Acceuil/acceuil.jpg);
   background-size: 2050px ;
@@ -77,8 +78,6 @@ button {
   min-height: 100%;
 
 }
-@font-face { font-family: "ringbearer" ;src: url(RINGM.ttf);}
-
 
  h1{
   	text-align: center;

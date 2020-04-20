@@ -18,4 +18,4 @@ Lien pour jouer en ligne : http://137.74.114.247:26000/
 
 ## Github
 
-La version de la master est non fonctionnelle, la version dans la branche entest_nico est quand à elle fonctionnelle, c'est celle qui est implenté sur le site.
+La version de la master est une version rendu en retard, la version dans la branche entest_nico est quand à elle fonctionnelle, et fut rendu à l'heure.
