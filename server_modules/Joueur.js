@@ -3,7 +3,6 @@ class Joueur {
         this.pseudo = pseudo;
         this.couleur = (couleur == "blancs") ? 0 : 1;
         this.points = 0;
-        this.isReady = 0;
     }
 
     // ajoute les points au joueur en fonction du pion mangé

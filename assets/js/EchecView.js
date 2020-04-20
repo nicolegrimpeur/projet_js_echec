@@ -3,11 +3,9 @@ class EchecView {
         this.game = game;
         this.name = name;
         this.couleur = couleur;
-        this.game.joueur1 = game.joueur1;
-        this.game.joueur2 = game.joueur2;
+        // this.game.joueur1 = game.joueur1;
+        // this.game.joueur2 = game.joueur2;
         this.click = []; // stocke les coordonnées du premier clic
-        /*let tab = document.getElementById("tab"); // permet d'enlever le premier enfant texte du tableau
-        tab.removeChild(tab.firstChild);*/
         this.modif_title();
         this.create_grid();
         this.affiche_pion();

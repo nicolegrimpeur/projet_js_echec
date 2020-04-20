@@ -1,4 +1,5 @@
 const port = 8100;
+const bodyParser=require("body-parser");
 
 const express = require('express');
 const app = express();
@@ -8,7 +9,7 @@ const io = require('socket.io')(server);
 
 const Joueur = require('./server_modules/Joueur');
 
-let nbJoueur = 0, nbInGame = 0, joueur1, joueur2, playersIn = 0, turn = 0, grid = 0;
+var nbJoueur = 0, nbInGame = 0, joueur1, joueur2, clients = [], playersIn = 0, turn = 0, grid = 0;
 
 function sleep(milliseconds) {
     const date = Date.now();
@@ -20,9 +21,15 @@ function sleep(milliseconds) {
 }
 
 app.use(express.static(__dirname + '/assets/'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.get('/', (req, res, next) => {
-    res.sendFile(__dirname + '/assets/views/lobby.html');
+    res.sendFile(__dirname + '/assets/views/acceuil.html');
+});
+
+app.post('/',(req,res,next)=>{
+    console.log(req.body);
 });
 
 app.get('/lobby.html', (req, res, next) => {
@@ -76,8 +83,9 @@ app.get('/plateau.html', (req, res, next) => {
 });
 
 io.sockets.on('connection', (socket) => {
+    clients.push(socket);
     io.emit('Hello', 'Un nouveau joueur est connecté !'); // permet d'envoyer le message à toutes les connections
-    console.log('user connected');
+
     nbJoueur++;
 
     socket.on('couleur?', (pseudo) => {
@@ -108,13 +116,30 @@ io.sockets.on('connection', (socket) => {
         //console.log("C'est au tour de " + (turn % 2 == joueur1.couleur) ? joueur1.pseudo : joueur2.pseudo);
     });
 
+    socket.on('nouveau_client', (pseudo) => {
+        console.log("new client", pseudo)
+    });
+
+    socket.on('message', (msg,pseudo) => {
+        console.log("le message est:", msg,"le pseudo de la personne est:",pseudo)
+        for (let i =0;i<clients.length;i++){
+            console.log(clients[i].id)
+        }
+        for (let i =0;i<clients.length;i++){
+            if(clients[i].id==socket.id) continue
+            clients[i].emit('push_message',msg,pseudo)
+        }
+    });
+
     socket.on('private message', (from, msg) => {
         console.log('Message de ', from, ' disant : ', msg);
     });
 
-    socket.on('disconnect', () => {
-        io.emit('Hello', 'Un joueur a quitté la partie');
-        console.log('user disconnected');
+    socket.on('disconnect', (reason) => {
+        console.log('user disconnected for ', reason);
+        let index=clients.indexOf(socket)
+        if(index!==-1) clients.splice(index,1)
+
         nbJoueur--;
         if (!nbJoueur) {
             joueur1 = null, joueur2 = null, playersIn = 0, nbInGame = 0, turn = 0, grid = 0;
