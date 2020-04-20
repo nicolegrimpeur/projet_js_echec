@@ -22,7 +22,7 @@ function sleep(milliseconds) {
 app.use(express.static(__dirname + '/assets/'));
 
 app.get('/', (req, res, next) => {
-    res.sendFile(__dirname + '/assets/views/lobby.html');
+    res.sendFile(__dirname + '/assets/views/acceuil.html');
 });
 
 app.get('/lobby.html', (req, res, next) => {
