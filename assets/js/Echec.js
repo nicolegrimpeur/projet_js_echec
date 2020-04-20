@@ -1,66 +1,103 @@
 import("./Pions.js");
-import("./Joueur.js");
 
 class Echec {
-    constructor() {
-        this.grid = new Array(8); // tableau de position en 8*8
+    constructor(joueur1, joueur2) {
+        this.grid; // tableau de position en 8*8
+        this.grid_default;
         this.tour = 0; // nombre pair : joueur 0, nombre impair : joueur 1
         this.pions_manges = []; // stocke les pions qui ont été mangé
         this.echec = [false]; // stock si le roi est en echec ou non et quel pion le menace
         this.deja_dans_affiche = false;
         this.mat = undefined;
         this.fini = undefined;
-        this.pseudo_joueur1 = "pseudo1";
-        this.pseudo_joueur2 = "pseudo2";
+        if (joueur1.couleur == 0) {
+            this.joueur_blanc = joueur1;
+            this.joueur_noir = joueur2;
+        } else {
+            this.joueur_blanc = joueur2;
+            this.joueur_noir = joueur1;
+        }
         this.egalite = false;
-        this.init_grid();
         this.reset();
+        this.joueur_blanc.ajout_points = function(type) {
+            if (type == "Dame") {
+                this.points += 8.8;
+            }
+            else if (type == "Tour") {
+                this.points += 5.1;
+            }
+            else if (type == "Cavalier") {
+                this.points += 3.2;
+            }
+            else if (type == "Fou") {
+                this.points += 3.33;
+            }
+            else if (type == "Pion") {
+                this.points += 1.0;
+            }
+        };
+        this.joueur_noir.ajout_points = function(type) {
+            if (type == "Dame") {
+                this.points += 8.8;
+            }
+            else if (type == "Tour") {
+                this.points += 5.1;
+            }
+            else if (type == "Cavalier") {
+                this.points += 3.2;
+            }
+            else if (type == "Fou") {
+                this.points += 3.33;
+            }
+            else if (type == "Pion") {
+                this.points += 1.0;
+            }
+        };
     }
-
+    
     // initialise la taille de la liste grid
     init_grid() {
+        this.grid_default = new Array(8);
+
         for (let i = 0; i < 8; ++i) {
-            this.grid[i] = Array(8);
+            this.grid_default[i] = new Array(8);
         }
+        this.grid_default[0][0] = new Tour(1, 0, 0);
+        this.grid_default[0][1] = new Cavalier(1, 1, 0);
+        this.grid_default[0][2] = new Fou(1, 2, 0);
+        this.grid_default[0][3] = new Dame(1, 3, 0);
+        this.grid_default[0][4] = new Roi(1, 4, 0);
+        this.grid_default[0][5] = new Fou(1, 5, 0);
+        this.grid_default[0][6] = new Cavalier(1, 6, 0);
+        this.grid_default[0][7] = new Tour(1, 7, 0);
+        for (let i = 0; i <= 7; ++i) {
+            this.grid_default[1][i] = new Pion(1, i, 1);
+        }
+
+        this.grid_default[7][0] = new Tour(0, 0, 7);
+        this.grid_default[7][1] = new Cavalier(0, 1, 7);
+        this.grid_default[7][2] = new Fou(0, 2, 7);
+        this.grid_default[7][3] = new Dame(0, 3, 7);
+        this.grid_default[7][4] = new Roi(0, 4, 7);
+        this.grid_default[7][5] = new Fou(0, 5, 7);
+        this.grid_default[7][6] = new Cavalier(0, 6, 7);
+        this.grid_default[7][7] = new Tour(0, 7, 7);
+        for (let i = 0; i <= 7; ++i) {
+            this.grid_default[6][i] = new Pion(0, i, 6);
+        }
+
+        for (let i = 2; i <= 5; ++i) {
+            for (let j = 0; j <= 7; ++j) {
+                this.grid_default[i][j] = undefined;
+            }
+        }
+        return this.grid_default;
     }
 
     // remet à 0 le tableau grid et les variables utiles
     reset() {
         // positions des pions sur un jeu d'echec classique
-        this.grid[0][0] = new Tour(1, 0, 0);
-        this.grid[0][1] = new Cavalier(1, 1, 0);
-        this.grid[0][2] = new Fou(1, 2, 0);
-        this.grid[0][3] = new Dame(1, 3, 0);
-        this.grid[0][4] = new Roi(1, 4, 0);
-        this.grid[0][5] = new Fou(1, 5, 0);
-        this.grid[0][6] = new Cavalier(1, 6, 0);
-        this.grid[0][7] = new Tour(1, 7, 0);
-        for (let i = 0; i <= 7; ++i) {
-            this.grid[1][i] = new Pion(1, i, 1);
-        }
-
-        this.grid[7][0] = new Tour(0, 0, 7);
-        this.grid[7][1] = new Cavalier(0, 1, 7);
-        this.grid[7][2] = new Fou(0, 2, 7);
-        this.grid[7][3] = new Dame(0, 3, 7);
-        this.grid[7][4] = new Roi(0, 4, 7);
-        this.grid[7][5] = new Fou(0, 5, 7);
-        this.grid[7][6] = new Cavalier(0, 6, 7);
-        this.grid[7][7] = new Tour(0, 7, 7);
-        for (let i = 0; i <= 7; ++i) {
-            this.grid[6][i] = new Pion(0, i, 6);
-        }
-
-        for (let i = 2; i <= 5; ++i) {
-            for (let j = 0; j <= 7; ++j) {
-                this.grid[i][j] = undefined;
-            }
-        }
-
-        // donne la couleur noir ou blanche de manière aléatoire
-        let random = Math.floor(Math.random() * 2);
-        this.joueur_blanc = new Joueur(((random) ? this.pseudo_joueur1 : this.pseudo_joueur2), 0);
-        this.joueur_noir = new Joueur(((!random) ? this.pseudo_joueur1 : this.pseudo_joueur2), 1);
+        this.grid = this.init_grid();
 
         // remet à 0 les différentes variables
         this.tour = 0;

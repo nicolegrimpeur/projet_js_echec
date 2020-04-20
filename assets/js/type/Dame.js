@@ -1,3 +1,4 @@
+// objet contenant la dame
 class Dame extends Pions {
     constructor(couleur, x, y) {
         super(couleur, x, y, "Dame");

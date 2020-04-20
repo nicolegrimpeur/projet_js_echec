@@ -1,18 +1,15 @@
 class EchecView {
-    constructor(game, name) {
+    constructor(game, name, couleur) {
         this.game = game;
         this.name = name;
+        this.couleur = couleur;
         this.click = []; // stocke les coordonnées du premier clic
-        let tab = document.getElementById("tab"); // permet d'enlever le premier enfant texte du tableau
-        tab.removeChild(tab.firstChild);
         this.modif_title();
         this.create_grid();
         this.affiche_pion();
         this.create_listeneurs();
-
         this.nom_joueur();
     }
-
     // modifie le titre de la page
     modif_title() {
         document.getElementById("titre").textContent = this.name;
@@ -101,8 +98,8 @@ class EchecView {
         // supprime tout et raffiche tout selon la grille
         if (value[0] == "refresh") {
             let tab = document.getElementById("tab");
-            for (let i = 0; i < 8; ++i) {
-                tab.removeChild(tab.firstChild);
+            while (tab.firstChild) {
+                tab.removeChild(tab.lastChild);
             }
             this.create_grid();
             this.affiche_pion();
@@ -215,12 +212,34 @@ class EchecView {
 
     // affiche le nom du joueur qui peut jouer
     nom_joueur() {
-        if (this.game.echec[0]) {
+        /*if (this.game.echec[0]) {
             if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_blanc.pseudo + " est en échec";
             else document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_noir.pseudo + " est en échec ";
         } else {
             if (this.game.getCurrentPlayer() == 0) document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_blanc.pseudo + " ";
             else document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_noir.pseudo + " ";
+    }*//*
+        if (this.game.echec[0]) {
+            if (this.game.tour % 2 == 0) document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_blanc.pseudo + " est en échec";
+            else document.getElementById("joueur").textContent = "Le joueur " + this.game.joueur_noir.pseudo + " est en échec ";
+        } else {
+            if (this.game.tour % 2 == 0) document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_blanc.pseudo + " ";
+            else document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_noir.pseudo + " ";
+        }*/
+        if (this.game.echec[0]) { // 1) s'il y a échec...
+            if (this.game.tour % 2 == 0) { // 2) ...que c'est au tour du joueur blanc...
+                if (this.couleur == 0) document.getElementById("joueur").textContent = "Vous êtes en échec "; // 3) ...et que je suis le joueur blanc 
+                else document.getElementById("joueur").textContent = "Le joueur adverse est en échec "; // 3) ...et que je ne suis pas le joueur blanc
+            } 
+            else if (this.couleur == 1) document.getElementById("joueur").textContent = "Vous êtes en échec "; // 2) ...que c'est au tour du joueur noir et que je suis le joueur noir
+            else document.getElementById("joueur").textContent = "Le joueur adverse est en échec "; // 2) ...que c'est au tour du joueur noir et que je ne suis pas le joueur noir
+        } else { // 1) s'il n'y a pas échec
+            if (this.game.tour % 2 == 0) { // 2) ...que c'est au tour du joueur blanc...
+                if (this.couleur == 0) document.getElementById("joueur").textContent = "À votre tour "; // 3) ...et que je suis le joueur blanc 
+                else document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_blanc.pseudo + " ";// 3) ...et que je ne suis pas le joueur blanc
+            }
+            else if (this.couleur == 1) document.getElementById("joueur").textContent = "À votre tour "; // 2) ...que c'est au tour du joueur noir et que je suis le joueur noir
+            else document.getElementById("joueur").textContent = "Au tour de " + this.game.joueur_noir.pseudo + " ";// 3) ...et que je ne suis pas le joueur noir
         }
         this.blason();
     }
@@ -246,7 +265,7 @@ class EchecView {
         img.setAttribute('class', 'blason');
 
         // on définit quel est l'image que l'on doit afficher
-        img.setAttribute('src', '../img/blason_du_joueur/joueur' + String(this.game.getCurrentPlayer() + 1) + '.png');
+        img.setAttribute('src', '../img/blason_du_joueur/joueur' + String(this.game.tour % 2 + 1) + '.png');
     }
 
     // affiche les pions mangés
