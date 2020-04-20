@@ -17,11 +17,17 @@ import("./getParam.js");
     console.log(pseudo + " " + couleur);
 
     if (pseudo != null) { // remplacement du message d'acceuil
+        socket.emit('couleur?', pseudo);
+         
         document.getElementById("hello").textContent = "Salutation " + pseudo + " !";
         if (couleur != "lambda") document.getElementById("choix").textContent = "Tu as choisi les " + couleur;
         else document.getElementById("choix").textContent = "Tu as choisi une couleur par défaut";
         
         document.getElementById("pseudo").setAttribute("value", pseudo); // rempli le formulaire invisible
-        document.getElementById("couleur").setAttribute("value", couleur);
     }
+
+    socket.on('couleur', (couleurBin) => {
+        console.log(pseudo + " " + ((couleurBin == 0) ? "blancs" : "noirs"));
+        document.getElementById("couleur").setAttribute("value", couleurBin);
+    });
 })();
