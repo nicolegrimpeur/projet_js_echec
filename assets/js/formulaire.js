@@ -9,11 +9,8 @@ document.title = pseudo + ' - ' + document.title;
 
 // insertion dans la page de jeu
 socket.on('push_message',function(msg,pseudo) {
-
     console.log("push_message", msg, pseudo)
     insereMessage(pseudo+":", msg);
-
-
 })
 
 // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
@@ -27,7 +24,5 @@ $('#formulaire_chat').submit(function () {
 
 // l'ajout d'un message
 function insereMessage(pseudo, message) {
-
-
     $('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
 }

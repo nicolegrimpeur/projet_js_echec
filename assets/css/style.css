@@ -2,12 +2,12 @@ table {
     /*margin-top: 40px;*/
     border-collapse: collapse;
     border: black solid 2px;
-    background : url(../img/Plateau/dalle/dalle-blanche.png);
+    background: url(../img/Plateau/dalle/dalle-blanche.png);
 }
 
 /* id des cases */
 td {
-    border: black solid 2px ;
+    border: black solid 2px;
     display: table-cell;
     width: 70px;
     height: 70px;
@@ -16,17 +16,17 @@ td {
 }
 
 /* id du titre*/
-h3{
+h3 {
     text-align: center;
-    color:#FFD700;
-    font-size: 30px ;
+    color: #FFD700;
+    font-size: 30px;
     font-family: ringbearer;
 }
 
-.masthead{
+.masthead {
     background: url(../img/Plateau/teste2.jpg);
-    background-repeat:no-repeat;
-    background-size: 1900px ;
+    background-repeat: no-repeat;
+    background-size: 1900px;
     position: fixed;
     top: 0;
     left: 0;
@@ -34,14 +34,15 @@ h3{
     min-width: 100%;
     min-height: 100%;
 }
-.score{
-    color:#FFD700;
+
+.score {
+    color: #FFD700;
     font-size: 25px;
     margin-left: 170px;
     margin-top: 380px;
 }
 
-.joueur1{
+.joueur1 {
     background-image: url(../img/blason_du_joueur/joueur1.png);
     position: absolute;
     background-size: 50px;
@@ -49,20 +50,9 @@ h3{
     height: 50px;
     margin-left: 150px;
     margin-top: 300px;
-
-
-}
-#score_blanc{
-    position: absolute;
-}
-#mange_noir{
-    position: absolute;
-    margin-left: 50px;
-    margin-top: 420px;
-
 }
 
-.joueur2{
+.joueur2 {
     background-image: url(../img/blason_du_joueur/joueur2.png);
     position: absolute;
     background-size: 50px;
@@ -70,17 +60,27 @@ h3{
     height: 50px;
     margin-left: 1350px;
     margin-top: 300px;
+}
 
-}
-#score_noir{
+#score_blanc {
     position: absolute;
-    margin-left:1375px;
 }
-#mange_blanc{
+
+#mange_noir {
+    position: absolute;
+    margin-left: 50px;
+    margin-top: 420px;
+}
+
+#score_noir {
+    position: absolute;
+    margin-left: 1375px;
+}
+
+#mange_blanc {
     position: absolute;
     margin-left: 1200px;
     margin-top: 420px;
-
 }
 
 /* classe pour les pions */
@@ -103,9 +103,8 @@ h3{
 }
 
 .black {
-    background : url(../img/Plateau/dalle/dalle-noire.png);
-
- }
+    background: url(../img/Plateau/dalle/dalle-noire.png);
+}
 
 /* classe pour les blasons des personnages */
 .blason {
@@ -127,27 +126,28 @@ h3{
 
 /* classe pour le score*/
 .score-blanc {
-    margin-left:300px;
-
+    margin-left: 300px;
 }
 
-}
-
+/* zone du message */
 #message {
     position: absolute;
-    margin-top: 950px;
+    margin-top: 500px;
 }
 
+/* bouton envoyer */
 #envoi_message {
     position: absolute;
-    margin-top: 950px;
+    margin-top: 500px;
     font-size: 14px;
     margin-left: 260px;
-
 }
 
-#zone_chat strong {
-    color: black;
-    background-color: white;
+/* affichage du chat */
+#zone_chat {
+    margin-top: 510px;
+    position: absolute;
+    color: white;
+    background-color: transparent;
     padding: 2px;
 }

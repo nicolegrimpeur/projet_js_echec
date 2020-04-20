@@ -10,8 +10,8 @@ class Echec {
         this.deja_dans_affiche = false;
         this.mat = undefined;
         this.fini = undefined;
-        this.pseudo_joueur1 = "pseudo1";
-        this.pseudo_joueur2 = "pseudo2";
+        this.pseudo_joueur1 = "joueur 1";
+        this.pseudo_joueur2 = "joueur 2";
         this.egalite = false;
         this.init_grid();
         this.reset();
