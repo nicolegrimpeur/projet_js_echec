@@ -25,7 +25,7 @@ app.post('/',(req,res,next)=>{
     console.log(req.body);
 });
 
-var clients=[]
+var clients=[];
 
 io.on("connection", socket =>{
     console.log(socket.id);
