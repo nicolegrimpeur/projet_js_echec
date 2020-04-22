@@ -12,6 +12,7 @@ import("./getParam.js");
     const socket = io.connect('http://localhost:26000');
     
     /**************************    Début partie chat    **************************/
+    
     socket.emit('nouveau_client', pseudo);
     document.title = pseudo + ' - ' + document.title;
 
