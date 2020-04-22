@@ -9,10 +9,9 @@ import("./getParam.js");
     poke.setAttribute("autoplay", "");
     poke.setAttribute("src", "../audios/poke.mp3");;
 
-    const socket = io.connect('http://locahost:8100');
-
+    const socket = io.connect('http://localhost:26000');
+    
     /**************************    Début partie chat    **************************/
-
     socket.emit('nouveau_client', pseudo);
     document.title = pseudo + ' - ' + document.title;
 
@@ -43,7 +42,6 @@ import("./getParam.js");
     // stockage de la couleur jouée sous forme binaire
     socket.on('couleur', (couleurBin) => {
         document.getElementById("couleur").textContent = "Tu joues les " + ((couleurBin == 0) ? "blancs" : "noirs");
-        console.log(pseudo + " " + ((couleurBin == 0) ? "blancs" : "noirs"));
         couleur = couleurBin;
     });
 
@@ -52,8 +50,6 @@ import("./getParam.js");
 
     // initialisation du plateau
     socket.on('init', (joueur1, joueur2) => {
-        console.log(joueur1.pseudo + " contre " + joueur2.pseudo);
-
         tab = document.getElementById("tab");
         while (tab.firstChild) {
             tab.removeChild(tab.lastChild);

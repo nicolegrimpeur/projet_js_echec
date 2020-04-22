@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "ringbearer" ;
+    src: url(./RINGM.ttf);
+}
+
 table {
     /*margin-top: 40px;*/
     border-collapse: collapse;
