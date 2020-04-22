@@ -70,10 +70,9 @@ io.sockets.on('connection', (socket) => {
             grid = newGrid;
             echec = newEchec;
         }
-            io.emit('refresh', grid, turn, echec);
+        io.emit('refresh', grid, turn, echec);
 
-            console.log("turn " + turn);
-            console.log("C'est au tour de " + (turn % 2 == joueur1.couleur ? joueur1.pseudo : joueur2.pseudo));
+        console.log("turn " + turn);
     });
 
     socket.on('nouveau_client', (pseudo) => {

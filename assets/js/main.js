@@ -5,9 +5,7 @@ import("./getParam.js");
 (function() {
     let pseudo = $_GET('pseudo'), couleur = $_GET('couleur') // récupère le pseudo et la couleur du joueur
     
-    let view , game, tab, poke = document.createElement("audio");
-    poke.setAttribute("autoplay", "");
-    poke.setAttribute("src", "../audios/poke.mp3");;
+    let view , game, tab, poke;
 
     const socket = io.connect('http://localhost:26000');
     
@@ -42,7 +40,6 @@ import("./getParam.js");
 
     // stockage de la couleur jouée sous forme binaire
     socket.on('couleur', (couleurBin) => {
-        document.getElementById("couleur").textContent = "Tu joues les " + ((couleurBin == 0) ? "blancs" : "noirs");
         couleur = couleurBin;
     });
 
@@ -74,6 +71,9 @@ import("./getParam.js");
             
             // joue un son quand je peux de nouveau jouer
             if (tab.lastElementChild.localName == "audio") tab.removeChild(tab.lastElementChild);
+            poke = document.createElement("audio");
+            poke.setAttribute("autoplay", "");
+            poke.setAttribute("src", "../audios/poke.mp3");
             tab.appendChild(poke);
 
             view.modif_grid(["refresh"]);
