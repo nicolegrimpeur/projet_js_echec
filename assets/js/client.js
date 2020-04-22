@@ -1,7 +1,7 @@
 import("./getParam.js");
 
 (function () {
-    const socket = io.connect('http://localhost:8100');
+    const socket = io.connect('http://localhost:26000');
     socket.on('Hello' , (message) => {
         // console.log('Le serveur a un message pour vous : ' + message);
     });
@@ -14,7 +14,6 @@ import("./getParam.js");
 
 
     let pseudo = $_GET('pseudo'), couleur = $_GET('couleur'); // récupère le pseudo et la couleur du joueur
-    // console.log(pseudo + " " + couleur);
 
     if (pseudo != null) { // remplacement du message d'acceuil
         socket.emit('couleur?', pseudo);
@@ -27,7 +26,6 @@ import("./getParam.js");
     }
 
     socket.on('couleur', (couleurBin) => {
-        // console.log(pseudo + " " + ((couleurBin == 0) ? "blancs" : "noirs"));
         document.getElementById("couleur").setAttribute("value", couleurBin);
     });
 })();

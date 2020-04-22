@@ -18,8 +18,6 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 <body>
-    <h3><span id="couleur"></span></h3>
-
     <div class="masthead">
         <div class="joueur2"></div>
         <span id="score_noir" class="score">0</span>
@@ -34,7 +32,7 @@
         </div>
         
         <center>
-            <h1><img src="../img/TheLordsTournament.png" border="0"></h1>
+            <h1><img src="../img/TheLordsTournament.png" style="border: 0px"></h1>
             <h3><span id="joueur">Merci d'attendre le deuxième joueur</span></h3>
 
             <table id="tab">
@@ -42,17 +40,16 @@
             <br>
         </center>
         <br>
-        <audio src="../audios/Plateau.mp3" autoplay loop></audio>
+        <audio src="../audios/plateau.mp3" autoplay loop></audio>
     </div>
 
-    <div>
+    <div id="poke">
         <form action="/" method="post" id="formulaire_chat">
-            <input type="text" name="message" id="message" placeholder="Votre message..." style="background: #999999; border-color: #99999;" size="50" autofocus/>
+            <input type="text" name="message" id="message" placeholder="Votre message..." style="background: #999999;" size="50" autofocus/>
             <input type="submit" id="envoi_message" value="Envoyer" style="background: #999999; border: 0px;"/>
         </form>
 
-        <section id="zone_chat">
-        </section>
+        <section id="zone_chat"></section>
     </div>
 
     <script type="text/javascript" src="../js/main.js"></script>

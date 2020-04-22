@@ -18,6 +18,7 @@ class Echec {
             this.joueur_noir = joueur1;
         }
         this.egalite = false;
+        this.init_grid();
         this.reset();
         this.joueur_blanc.ajout_points = function(type) {
             if (type == "Dame") {
@@ -97,7 +98,7 @@ class Echec {
     // remet à 0 le tableau grid et les variables utiles
     reset() {
         // positions des pions sur un jeu d'echec classique
-        this.grid = this.init_grid();
+        this.grid = this.grid_default;
 
         // remet à 0 les différentes variables
         this.tour = 0;
@@ -208,7 +209,7 @@ class Echec {
                     if (pion.type == "Pion" && pion.capacite_de_deplacement[0].length == 4) {
                         pion.capacite_de_deplacement[0].pop();
                     }
-
+                    
                     let case_mange = this.getCaseState(x_clic, y_clic);
                     // si la case sur laquelle on veut aller est un pion
                     if (case_mange != undefined) {

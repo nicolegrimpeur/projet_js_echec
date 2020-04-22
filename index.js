@@ -9,7 +9,7 @@ const io = require('socket.io')(server);
 
 const Joueur = require('./server_modules/Joueur');
 
-let nbJoueur = 0, nbInGame = 0, joueur1, joueur2, clients = [], playersIn = 0, turn = 0, grid = 0;
+let nbJoueur = 0, nbInGame = 0, joueur1, joueur2, clients = [], playersIn = 0, turn = 0, grid = 0, echec = false;
 
 app.use(express.static(__dirname + '/assets/'));
 app.use(bodyParser.json());
@@ -54,37 +54,39 @@ io.sockets.on('connection', (socket) => {
         nbInGame++;
         if (playersIn && nbInGame >= 2) {
             console.log(joueur1.pseudo + " contre " + joueur2.pseudo);
-            io.emit('init', turn, joueur1, joueur2)
+            io.emit('init', joueur1, joueur2)
         }
     });
     
     socket.on('refresh', (couleur) => {
         if (turn % 2 == couleur) {
-            socket.emit('refresh', grid, turn);
+            socket.emit('refresh', grid, turn, echec);
         }
     });
     
-    socket.on('update', (newGrid, newTurn) => {
-        turn = newTurn;
-        grid = newGrid;
-        io.emit('refresh', grid, turn);
+    socket.on('update', (newGrid, newTurn, newEchec) => {
+        if (turn == 0 || newTurn > 0) {
+            turn = newTurn;
+            grid = newGrid;
+            echec = newEchec;
+        }
+        io.emit('refresh', grid, turn, echec);
 
         console.log("turn " + turn);
-        //console.log("C'est au tour de " + (turn % 2 == joueur1.couleur) ? joueur1.pseudo : joueur2.pseudo);
     });
 
     socket.on('nouveau_client', (pseudo) => {
-        console.log("new client", pseudo)
+        console.log("new client", pseudo);
     });
 
     socket.on('message', (msg,pseudo) => {
-        console.log("le message est:", msg,"le pseudo de la personne est:",pseudo)
+        console.log("le message est:", msg,"le pseudo de la personne est:",pseudo);
         for (let i =0;i<clients.length;i++){
-            console.log(clients[i].id)
+            console.log(clients[i].id);
         }
         for (let i =0;i<clients.length;i++){
-            if(clients[i].id==socket.id) continue
-            clients[i].emit('push_message',msg,pseudo)
+            if(clients[i].id==socket.id) continue;
+            clients[i].emit('push_message',msg,pseudo);
         }
     });
 
@@ -94,12 +96,12 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('disconnect', (reason) => {
         console.log('user disconnected for', reason);
-        let index=clients.indexOf(socket)
-        if(index!==-1) clients.splice(index,1)
+        let index=clients.indexOf(socket);
+        if(index!==-1) clients.splice(index,1);
 
         nbJoueur--;
-        if (!nbJoueur) {
-            playersIn = 0, nbInGame = 0, turn = 0, grid = 0;
+        if (!nbJoueur && playersIn) {
+            joueur1 = null, joueur2 = null, playersIn = 0, nbInGame = 0, turn = 0, grid = 0, echec = false;
             console.log("server reseted !");
         }
     });
